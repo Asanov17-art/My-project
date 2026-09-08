@@ -19,6 +19,37 @@ cp .env.example .env    # и вписать свои ключи
 pip install -r requirements.txt
 ```
 
+## Проверка ключей
+
+Не угадывайте, что не так — спросите:
+
+```bash
+PYTHONPATH=src python3 -m aliexpress_affiliate.cli doctor --env-file .env
+```
+
+`doctor` делает три минимальных запроса — категории (проверяет подпись и права),
+поиск (проверяет основной эндпоинт) и генерацию одной ссылки (проверяет
+`tracking_id`) — и на каждую ошибку выдаёт не код гейтвея, а конкретное действие:
+
+```
+Configuration
+  gateway:     https://api-sg.aliexpress.com/sync
+  app_key:     12********56
+  app_secret:  ab********yz
+  tracking_id: my-campaign
+  sign_method: sha256
+
+Checks
+[PASS] credentials + affiliate permission: gateway accepted the signature, 47 categories returned
+[PASS] product search: 8342 matches for 'usb cable' (USB Type-C Cable 3A Fast Charging)
+[FAIL] tracking id: [43] bad tracking id (isv.tracking-id-not-exist: None)
+       -> ALIEXPRESS_TRACKING_ID does not exist for this account; create one in
+          the AliExpress affiliate console and copy it exactly.
+```
+
+Секреты в отчёте маскируются, так что вывод можно спокойно кому-то переслать.
+Код возврата `0`, если ничего не упало (пропущенные проверки провалом не считаются).
+
 ## Быстрый старт
 
 ```python
@@ -83,6 +114,8 @@ python -m aliexpress_affiliate.cli orders --days 30 --json
 | `orders_by_index` / `iter_orders` | `aliexpress.affiliate.order.listbyindex` |
 | `order_details` | `aliexpress.affiliate.order.get` |
 
+Плюс `doctor` в CLI — проверка ключей, прав и tracking id (см. выше).
+
 ## Как устроено
 
 - `signing.py` — подпись запроса. По умолчанию `sha256` (HMAC-SHA256 от строки
@@ -96,6 +129,9 @@ python -m aliexpress_affiliate.cli orders --days 30 --json
   формах (`{"products": {"product": [...]}}`, `{"products": [...]}`, одиночный
   объект без обёртки) — `unpack_list` понимает все. Исходный JSON всегда лежит
   в `raw`, так что новые поля API доступны и без обновления пакета.
+- `diagnostics.py` — `doctor`: переводит коды гейтвея в понятные действия.
+  Правило разделения: `isv.*` — вина вызывающего (подпись, права, tracking id),
+  повторять бессмысленно; `isp.*` и код 7 — сторона платформы, ретраится.
 - `affiliate.py` — прикладные методы, значения по умолчанию (`tracking_id`,
   валюта, язык, страна доставки) и клиентская проверка лимитов (50 id или
   ссылок на вызов) — чтобы не тратить квоту на заведомо отбойные запросы.
@@ -137,10 +173,11 @@ pip install pytest
 python -m pytest
 ```
 
-53 теста, сети не требуют: HTTP заменён на `FakeTransport`, который записывает
+65 тестов, сети не требуют: HTTP заменён на `FakeTransport`, который записывает
 отправленные payload'ы и отдаёт заранее подготовленные ответы. Проверяются
-подпись (обе схемы), системные параметры, ретраи, оба конверта ошибок,
-пагинация, курсорный обход заказов и все формы коллекций в ответах.
+подпись (обе схемы), системные параметры, ретраи и то, что перманентные ошибки
+НЕ ретраятся, оба конверта ошибок, пагинация, курсорный обход заказов, все формы
+коллекций в ответах и диагностика.
 
 ## Ограничения
 

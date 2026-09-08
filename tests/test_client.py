@@ -156,3 +156,29 @@ def test_legacy_gateway_style_signs_with_the_api_path_and_a_datetime(transport):
     assert " " in payload["timestamp"]  # yyyy-MM-dd HH:mm:ss
     without_sign = {k: v for k, v in payload.items() if k != "sign"}
     assert payload["sign"] == sign(without_sign, "s", api_path="/router/rest")
+
+
+def test_caller_side_errors_are_not_retried_even_under_a_retryable_code(top_client, transport):
+    # isv.permission-deny arrives as code 15, which is otherwise retryable.
+    transport.queue(
+        {"error_response": {"code": 15, "msg": "denied", "sub_code": "isv.permission-deny"}}
+    )
+    with pytest.raises(ApiError) as excinfo:
+        top_client.call("m")
+    assert not isinstance(excinfo.value, RateLimitError)
+    assert len(transport.requests) == 1
+
+
+def test_platform_side_sub_codes_are_still_retried(top_client, transport):
+    transport.queue(
+        {
+            "error_response": {
+                "code": 15,
+                "msg": "upstream timeout",
+                "sub_code": "isp.top-remote-connection-timeout",
+            }
+        }
+    )
+    transport.queue({"resp_result": {"resp_code": 200, "result": {"ok": True}}})
+    assert unwrap_result(top_client.call("m")) == {"ok": True}
+    assert len(transport.requests) == 2

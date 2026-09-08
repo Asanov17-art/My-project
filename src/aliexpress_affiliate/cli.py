@@ -16,6 +16,11 @@ from datetime import datetime, timedelta, timezone
 from typing import Any, Sequence
 
 from .affiliate import AffiliateClient
+from .diagnostics import (
+    diagnostics_exit_code,
+    format_report,
+    run_diagnostics,
+)
 from .errors import AliExpressError
 from .models import Order, Product
 
@@ -97,6 +102,11 @@ def build_parser() -> argparse.ArgumentParser:
 
     sub.add_parser("categories", help="list affiliate categories")
 
+    sub.add_parser(
+        "doctor",
+        help="check credentials, API permission and tracking id, and say what to fix",
+    )
+
     orders = sub.add_parser("orders", help="list affiliate orders")
     orders.add_argument("--days", type=int, default=7, help="window size, ending now")
     orders.add_argument("--status")
@@ -129,6 +139,11 @@ def main(argv: Sequence[str] | None = None) -> int:
 
 
 def _dispatch(client: AffiliateClient, args: argparse.Namespace) -> int:
+    if args.command == "doctor":
+        checks = run_diagnostics(client)
+        print(format_report(client, checks))
+        return diagnostics_exit_code(checks)
+
     if args.command == "search":
         page = client.search_products(
             args.keywords,

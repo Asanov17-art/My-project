@@ -35,6 +35,12 @@ DEFAULT_GATEWAY = "https://api-sg.aliexpress.com/sync"
 RETRYABLE_ERROR_CODES = {"7", "15", "22", "23"}
 RETRYABLE_SUB_CODES = {"isp.top-remote-connection-timeout", "isp.top-remote-service-unavailable"}
 
+#: ``isv.*`` sub-codes blame the caller — a bad signature, a missing API
+#: package, an unknown tracking id. They arrive under retryable top-level codes
+#: (``isv.permission-deny`` comes back as code 15) but will never succeed on a
+#: retry, so the sub-code decides.
+PERMANENT_SUB_CODE_PREFIX = "isv."
+
 
 class Transport(Protocol):
     """Anything that can turn a signed form POST into ``(status, body)``."""
@@ -239,7 +245,9 @@ class TopClient:
             "request_id": error.get("request_id"),
             "payload": error,
         }
-        if code in RETRYABLE_ERROR_CODES or sub_code in RETRYABLE_SUB_CODES:
+        caller_fault = isinstance(sub_code, str) and sub_code.startswith(PERMANENT_SUB_CODE_PREFIX)
+        retryable = code in RETRYABLE_ERROR_CODES or sub_code in RETRYABLE_SUB_CODES
+        if retryable and not caller_fault:
             return RateLimitError(code, error.get("msg"), **kwargs)
         return ApiError(code, error.get("msg"), **kwargs)
 

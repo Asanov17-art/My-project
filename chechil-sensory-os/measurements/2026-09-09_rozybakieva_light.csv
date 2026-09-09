@@ -42,3 +42,5 @@ date,time,object,zone,point,surface,lux,height_cm,mode,light_sources,dimmer,note
 2026-09-09,14:1x,Rozybakieva,Z4,kamchatka_farthest_table,столешница,30,~75,MIN,"искусственный (дневной режим)","нет — один сценарий весь день","T=26.6C; RH=31.2%; шум 54.9 dBA SLOW; MAX=MIN"
 2026-09-09,14:2x,Rozybakieva,Z4,kamchatka_right_three_tables,столешница,88,~75,MAX,"искусственный (дневной режим)","нет — один сценарий весь день","T=26.6C; RH=31.2%; шум 55.6 dBA SLOW"
 2026-09-09,14:2x,Rozybakieva,Z4,kamchatka_right_three_tables,столешница,88,~75,MIN,"искусственный (дневной режим)","нет — один сценарий весь день","T=26.5C; RH=31.2%; шум 53.9 dBA SLOW; MAX=MIN"
+2026-09-09,14:3x,Rozybakieva,Z4,near_stage,столешница,97,~75,MAX,"искусственный (дневной режим)","нет — один сценарий весь день","T=26.5C; RH=32.2%; шум 52.0 dBA SLOW"
+2026-09-09,14:3x,Rozybakieva,Z4,near_stage,столешница,97,~75,MIN,"искусственный (дневной режим)","нет — один сценарий весь день","T=26.5C; RH=32.2%; шум 52.6 dBA SLOW; MAX=MIN"

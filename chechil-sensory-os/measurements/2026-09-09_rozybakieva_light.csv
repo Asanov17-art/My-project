@@ -2,3 +2,5 @@ date,time,object,zone,point,surface,lux,height_cm,mode,light_sources,dimmer,note
 2026-09-09,11:04,Rozybakieva,Z0,ambient,-,,,,"музыка не играет; гостей нет; T=26.7C; RH=35.3%",,"стартовые условия"
 2026-09-09,11:0x,Rozybakieva,Z3,reception,?,200,?,MAX,?,?,"MAX/MIN режим; высота и поверхность не зафиксированы"
 2026-09-09,11:0x,Rozybakieva,Z3,reception,?,195,?,MIN,?,?,"MIN того же замера; диапазон 195-200"
+2026-09-09,11:2x,Rozybakieva,Z6,wc_men_sink,раковина,328,?,MAX,?,?,"T=26.9C; RH=34.8%; фон - нерж. раковина"
+2026-09-09,11:2x,Rozybakieva,Z6,wc_men_sink,раковина,227,?,MIN,?,?,"MIN того же замера; разброс 227-328 требует объяснения"

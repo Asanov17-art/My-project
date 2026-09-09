@@ -1,0 +1,519 @@
+<title>Дневной срез Розыбакиева</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+  :root{
+    --paper:#f1f4f4;
+    --card:#fbfcfc;
+    --ink:#131a1c;
+    --ink-2:#33454a;
+    --muted:#566467;
+    --rule:#d3dcdb;
+    --rule-soft:#e3eae9;
+    --ok:#1a8a6a;
+    --warn:#a97207;
+    --crit:#bd2b52;
+    --band:rgba(26,138,106,.10);
+    --track:#e5ecea;
+    --shadow:0 1px 2px rgba(19,26,28,.06);
+    --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+    --f-body:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+    --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#101617;
+      --card:#161e20;
+      --ink:#e6edec;
+      --ink-2:#c2d0cf;
+      --muted:#8a9b9d;
+      --rule:#24302f;
+      --rule-soft:#1c2626;
+      --ok:#2aa093;
+      --warn:#c08a14;
+      --crit:#d9466a;
+      --band:rgba(42,160,147,.13);
+      --track:#1e2829;
+      --shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#101617;
+    --card:#161e20;
+    --ink:#e6edec;
+    --ink-2:#c2d0cf;
+    --muted:#8a9b9d;
+    --rule:#24302f;
+    --rule-soft:#1c2626;
+    --ok:#2aa093;
+    --warn:#c08a14;
+    --crit:#d9466a;
+    --band:rgba(42,160,147,.13);
+    --track:#1e2829;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--f-body);
+    font-size:17px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:36px 22px 96px}
+  @media (max-width:560px){ body{font-size:16px} .wrap{padding:26px 16px 72px} }
+
+  /* ---- type ---- */
+  h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+  h1{font-size:clamp(30px,7vw,44px);font-weight:700;letter-spacing:-.02em;line-height:1.06}
+  h2{font-size:clamp(20px,4.4vw,25px);font-weight:600;letter-spacing:-.01em;line-height:1.2}
+  h3{font-size:17px;font-weight:600;letter-spacing:-.005em}
+  p{margin:0}
+  .eyebrow{
+    font-family:var(--f-mono);font-size:11px;font-weight:500;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  }
+  .lede{font-size:clamp(18px,3.6vw,21px);line-height:1.5;color:var(--ink-2)}
+  .num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+  strong{font-weight:600}
+  em{font-style:italic}
+
+  /* ---- layout rhythm ---- */
+  header.doc{display:flex;flex-direction:column;gap:14px;padding-bottom:26px;border-bottom:2px solid var(--ink)}
+  section{display:flex;flex-direction:column;gap:16px;padding:34px 0;border-bottom:1px solid var(--rule)}
+  section:last-of-type{border-bottom:0}
+  .sec-head{display:flex;flex-direction:column;gap:5px}
+  .stack{display:flex;flex-direction:column;gap:12px}
+
+  /* ---- evidence chips: the project's own tagging system ---- */
+  .tag{
+    font-family:var(--f-mono);font-size:10.5px;font-weight:600;
+    letter-spacing:.1em;text-transform:uppercase;
+    padding:2px 6px;border-radius:2px;white-space:nowrap;
+    border:1px solid currentColor;
+  }
+  .t-fact{color:var(--ok)}
+  .t-hyp{color:var(--warn)}
+  .t-todo{color:var(--crit)}
+  .t-none{color:var(--muted)}
+
+  /* ---- meta grid ---- */
+  .meta{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft);
+  }
+  .meta div{background:var(--card);padding:11px 13px;display:flex;flex-direction:column;gap:3px}
+  .meta dt,.meta .k{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+  .meta .v{font-family:var(--f-display);font-size:15px;font-weight:600;line-height:1.3}
+
+  /* ---- verdict callout ---- */
+  .verdict{
+    border-left:3px solid var(--crit);
+    padding:2px 0 2px 18px;
+    display:flex;flex-direction:column;gap:11px;
+  }
+  .verdict .big{font-family:var(--f-display);font-size:clamp(21px,4.6vw,27px);font-weight:700;line-height:1.18;letter-spacing:-.015em}
+
+  /* ---- chart ---- */
+  figure{margin:0;display:flex;flex-direction:column;gap:14px}
+  figcaption{font-size:14.5px;color:var(--muted);line-height:1.5}
+  .chart{display:flex;flex-direction:column;gap:0}
+  .row{
+    display:grid;
+    grid-template-columns:minmax(96px,1.35fr) minmax(120px,2.2fr) 60px;
+    align-items:center;gap:10px;
+    padding:5px 4px;border-radius:2px;
+    transition:background .12s ease;
+  }
+  .row:hover,.row:focus-within{background:var(--rule-soft)}
+  .row .name{font-size:13.5px;line-height:1.25;color:var(--ink-2)}
+  .row .val{font-family:var(--f-mono);font-size:13px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+  .track{position:relative;height:15px;background:var(--track);border-radius:2px;overflow:hidden}
+  .track .zone{position:absolute;inset:0 auto 0 50%;width:25%;background:var(--band)}
+  .bar{position:absolute;left:0;top:0;bottom:0;border-radius:0 3px 3px 0}
+  .bar.ok{background:var(--ok)}
+  .bar.warn{background:var(--warn)}
+  .bar.crit{background:var(--crit)}
+  .row .val.ok{color:var(--ok)}
+  .row .val.warn{color:var(--warn)}
+  .row .val.crit{color:var(--crit)}
+  .axis{
+    display:grid;grid-template-columns:minmax(96px,1.35fr) minmax(120px,2.2fr) 60px;
+    gap:10px;padding:0 4px;
+  }
+  .axis .ticks{position:relative;height:16px;font-family:var(--f-mono);font-size:10px;color:var(--muted)}
+  .axis .ticks span{position:absolute;top:0;transform:translateX(-50%)}
+  .axis .ticks span:first-child{transform:none}
+  .axis .ticks span:last-child{transform:translateX(-100%)}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted)}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .sw{width:11px;height:11px;border-radius:2px;flex:none}
+  .sw.ok{background:var(--ok)} .sw.warn{background:var(--warn)} .sw.crit{background:var(--crit)}
+  .sw.band{background:var(--band);border:1px solid var(--rule)}
+  @media (max-width:520px){
+    .row,.axis{grid-template-columns:minmax(74px,1fr) minmax(74px,1.5fr) 54px;gap:7px}
+    .row .name{font-size:12px}
+  }
+
+  /* ---- tables ---- */
+  .tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:420px}
+  caption{text-align:left;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);padding-bottom:7px}
+  th,td{text-align:left;padding:8px 12px 8px 0;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+  th{font-family:var(--f-display);font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--rule)}
+  td.n,th.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right;padding-right:0}
+  tbody tr:last-child td{border-bottom:0}
+
+  /* ---- zone blocks ---- */
+  .zone{display:flex;flex-direction:column;gap:11px;padding:18px 0;border-top:1px solid var(--rule-soft)}
+  .zone:first-of-type{border-top:0;padding-top:4px}
+  .zone-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .zid{font-family:var(--f-mono);font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.06em}
+  .readout{display:flex;flex-wrap:wrap;gap:7px}
+  .chipnum{
+    font-family:var(--f-mono);font-size:12.5px;font-weight:500;
+    background:var(--card);border:1px solid var(--rule);border-radius:2px;
+    padding:3px 8px;box-shadow:var(--shadow);
+  }
+  .chipnum b{font-weight:600;color:var(--muted);font-family:var(--f-display);font-size:11px;letter-spacing:.05em;text-transform:uppercase;margin-right:5px}
+
+  /* ---- lists ---- */
+  ol,ul{margin:0;padding-left:1.25em;display:flex;flex-direction:column;gap:9px}
+  li{padding-left:2px}
+  .clean{list-style:none;padding-left:0}
+  .clean li{display:flex;gap:10px;align-items:flex-start}
+  .clean li .tag{margin-top:4px;flex:none}
+
+  /* ---- priority cards ---- */
+  .prio{display:flex;flex-direction:column;gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft)}
+  .prio article{background:var(--card);padding:15px 16px;display:flex;flex-direction:column;gap:7px}
+  .prio .top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .prio .cost{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-left:auto}
+  .prio p{font-size:14.5px;line-height:1.5;color:var(--ink-2)}
+
+  footer{padding-top:30px;color:var(--muted);font-size:13.5px;line-height:1.55;display:flex;flex-direction:column;gap:8px}
+  a{color:var(--ok);text-decoration-thickness:1px;text-underline-offset:2px}
+  a:focus-visible,.row:focus-visible{outline:2px solid var(--ok);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+
+<header class="doc">
+  <p class="eyebrow">Chechil Sensory OS · замер объекта</p>
+  <h1>Розыбакиева, дневной срез</h1>
+  <p class="lede">9 сентября 2026, 11:04–17:00. Гостей нет, нагрузки нет. Первые измеренные цифры по объекту — до этого дня не было ни одной.</p>
+  <div class="meta">
+    <div><span class="k">Точек по свету</span><span class="v num">19</span></div>
+    <div><span class="k">Точек по звуку</span><span class="v num">8</span></div>
+    <div><span class="k">Люксметр</span><span class="v">UNI-T UT383</span></div>
+    <div><span class="k">Шумомер</span><span class="v">FNIRSI FDM01<br><span class="num" style="font-size:12px;font-weight:400;color:var(--muted)">dBA + SLOW</span></span></div>
+  </div>
+</header>
+
+<section>
+  <div class="verdict">
+    <p class="eyebrow" style="color:var(--crit)">Главный вывод</p>
+    <p class="big">Свет — проблема. Звук — нет.</p>
+    <p>Три из восемнадцати столов зала дотягивают до норматива 100–150 лк. Пятнадцать — ниже, из них два стола фактически в темноте: <span class="num">4–6</span> и <span class="num">5–6</span> лк при накрытой сервировке. Звук при этом ровный по всему объекту (<span class="num">52,6–58,7</span> дБА) и с запасом до вечерней цели.</p>
+    <p>Это зеркальное отражение Жароковой, где боль — звук (<span class="num">99–107</span> дБА на баре), а свет уже частично починен пилотом. Деньги на Розыбакиева идут в свет.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <p class="eyebrow">Зал · 18 столешниц · высота ≈75 см</p>
+    <h2>Освещённость столов против норматива</h2>
+  </div>
+
+  <figure>
+    <div class="chart" id="chart"></div>
+    <div class="axis" aria-hidden="true">
+      <div></div>
+      <div class="ticks"><span style="left:0">0</span><span style="left:25%">50</span><span style="left:50%">100</span><span style="left:75%">150</span><span style="left:100%">200</span></div>
+      <div></div>
+    </div>
+    <div class="legend">
+      <span><i class="sw band"></i>норматив 100–150 лк</span>
+      <span><i class="sw ok"></i>в норме и выше</span>
+      <span><i class="sw warn"></i>ниже нормы</span>
+      <span><i class="sw crit"></i>провал, ниже 30</span>
+    </div>
+    <figcaption>Столбик — середина диапазона замера, справа приведён сам диапазон. Один стол (справа от входа) лежит <em>выше</em> полосы — это тоже отклонение, но безобидное по сравнению с остальными. Дневной свет через открытые входные двери вносил вклад в точки у входа; вечером они просядут.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="sec-head">
+    <p class="eyebrow">Закономерность</p>
+    <h2>Свет обслуживает проходы, а не столы</h2>
+  </div>
+  <p>В каждой зоне зала повторилось одно и то же: передний край освещён, глубина проваливается втрое и больше.</p>
+  <div class="tbl-scroll">
+    <table>
+      <caption>Передний край зоны против её глубины, лк</caption>
+      <thead><tr><th>Зона</th><th class="n">Край</th><th class="n">Глубина</th><th class="n">Кратность</th></tr></thead>
+      <tbody>
+        <tr><td>Камчатка</td><td class="n">143</td><td class="n">30</td><td class="n">4,8×</td></tr>
+        <tr><td>У бара</td><td class="n">80</td><td class="n">5</td><td class="n">16×</td></tr>
+        <tr><td>У сцены</td><td class="n">97</td><td class="n">32</td><td class="n">3,0×</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <ul class="clean">
+    <li><span class="tag t-hyp">Гипотеза</span><span>Светильники висят над проходами и по краям зон, а не над столами. Тогда уровень зависит от того, попал стол под светильник, а не от того, в какой части зала он стоит. <strong>Проверяется взглядом на потолок за минуту, без прибора.</strong></span></li>
+    <li><span class="tag t-fact">Доказано</span><span>Если гипотеза верна, решение то же, что в пилоте Жароковой: трековые светильники с узким лучом прицельно над столешницами. Тогда смета считается по числу столов, а не по площади зала.</span></li>
+  </ul>
+</section>
+
+<section>
+  <div class="sec-head">
+    <p class="eyebrow">Маршрут гостя</p>
+    <h2>Переходов между зонами нет</h2>
+  </div>
+  <p>Ни по свету, ни по звуку. Гость идёт от улицы до камчатки по ровному коридору впечатлений: не слышно и не видно, что он куда-то пришёл.</p>
+  <div class="tbl-scroll">
+    <table>
+      <caption>Перепады на стыках зон</caption>
+      <thead><tr><th>Переход</th><th>Свет</th><th>Звук</th></tr></thead>
+      <tbody>
+        <tr><td>Вход: воздух → пол</td><td class="num">1,6 : 1</td><td>—</td></tr>
+        <tr><td>Ресепшн → проход</td><td class="num">1,4 : 1</td><td class="num">&lt; 1 дБ</td></tr>
+        <tr><td>Проход → зал</td><td class="num">2,1 : 1</td><td class="num">&lt; 1 дБ</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><strong>Порог заметности контраста — 2:1</strong> [<span class="tag t-fact">Доказано</span>]. Всё, что ниже, глаз не регистрирует. Разницу в 1 дБ ухо тоже не слышит.</p>
+  <p>И это <em>другой</em> диагноз, чем на Жароковой. Там переходы есть, но сломанные: тамбур громче улицы, холл в 1200 лк перед тёмным залом — там надо <em>исправлять</em>. Здесь исправлять нечего: здесь ничего не сформулировано. Сенсорная работа на Розыбакиева — с нуля, а не ремонт.</p>
+</section>
+
+<section>
+  <div class="sec-head">
+    <p class="eyebrow">По зонам</p>
+    <h2>Что намеряли, зона за зоной</h2>
+  </div>
+
+  <div class="zone">
+    <div class="zone-head"><span class="zid">Z1</span><h3>Улица</h3><span class="tag t-todo">Измерить</span></div>
+    <p>Не измерена ни разу. Без уличной цифры перепад «улица → вход» не посчитать, а днём это самый большой перепад на маршруте: с десятков тысяч люкс до сотни.</p>
+  </div>
+
+  <div class="zone">
+    <div class="zone-head"><span class="zid">Z3</span><h3>Вход и ресепшн</h3></div>
+    <div class="readout">
+      <span class="chipnum"><b>воздух 104 см</b>195–200 лк</span>
+      <span class="chipnum"><b>пол</b>119–124 лк</span>
+      <span class="chipnum"><b>звук</b>54,6–57,6 дБА</span>
+      <span class="chipnum"><b>T</b>27,0 °C</span>
+    </div>
+    <p>Уровень звука с запасом внутри цели «ниже 65 дБА» — в отличие от Жароковой, где холл даёт 67–73. Свет плоский: соотношение 1,6:1 ниже порога заметности, визуальной иерархии на входе нет ни одной, ресепшн и мерч в равной заливке.</p>
+    <p><strong>Ограничение:</strong> двери были открыты, дневной свет вносил вклад. Эти цифры вечером недействительны.</p>
+  </div>
+
+  <div class="zone">
+    <div class="zone-head"><span class="zid">Z4</span><h3>Зал</h3></div>
+    <div class="readout">
+      <span class="chipnum"><b>столы</b>4–188 лк</span>
+      <span class="chipnum"><b>разброс</b>47×</span>
+      <span class="chipnum"><b>в норме</b>3 из 18</span>
+      <span class="chipnum"><b>звук</b>52,6–58,2 дБА</span>
+    </div>
+    <p>Две зоны посадки — справа у бара и середина камчатки — дают 4–6 и 5–6 лк. При таком уровне гость не читает меню, не видит еду и не проверяет счёт. Столы при этом накрыты, значит туда сажают.</p>
+    <p>Дальняя половина камчатки держит плато около 55 лк — недосвечена ровно вдвое. Зона у сцены (97 лк) практически в норме, и это хорошая новость: костяк вечернего зала освещён.</p>
+  </div>
+
+  <div class="zone">
+    <div class="zone-head"><span class="zid">Z5</span><h3>Бар</h3><span class="tag t-fact">Лучшее на объекте</span></div>
+    <div class="readout">
+      <span class="chipnum"><b>сторона 1</b>135–193 лк</span>
+      <span class="chipnum"><b>сторона 2</b>155–161 лк</span>
+      <span class="chipnum"><b>сторона 3</b>184–189 лк</span>
+    </div>
+    <p>Бар квадратный, три стороны. Меню читается везде. На Жароковой гостю за стойкой достаётся 10–11 лк — там карту физически не увидеть. <strong>Здесь этой проблемы нет.</strong></p>
+    <p>Единственный дефект: сторона 1 неравномерна (разброс 43 % против 3–4 % на двух других). Метод чистый, значит дыра реальная — перегоревшая лампа, повёрнутый светильник или что-то загораживает.</p>
+    <p>Отдельно: <strong>холодильники слышно громко.</strong> На баре звучит техника, а не музыка.</p>
+  </div>
+
+  <div class="zone">
+    <div class="zone-head"><span class="zid">Z6</span><h3>Коридор и уборные</h3></div>
+    <div class="readout">
+      <span class="chipnum"><b>муж. раковина</b>227–328 лк</span>
+      <span class="chipnum"><b>жен. раковина</b>136–162 лк</span>
+      <span class="chipnum"><b>коридор, пол</b>164–170 лк</span>
+      <span class="chipnum"><b>T</b>27,9–28,0 °C</span>
+    </div>
+    <p><strong>Мужская вдвое ярче женской.</strong> Минимум мужской (227) выше максимума женской (162) — при одной функции в одном здании. Причина, скорее всего, бытовая: лампы.</p>
+    <p>Коридор ярче зала вдвое по полу. Порог заметности превышен, но это мягкая форма проблемы Жароковой, где коридор ярче зала и гость возвращается за стол полуслепым.</p>
+    <p><strong>Вытяжка есть, но только в кабинках</strong> — салфетка у решётки держится. У раковин вытяжки нет. Пахнет хлоркой, то есть нейтральной чистотой; неприятного запаха нет. По запаху санблок не является проблемой.</p>
+    <p><strong>Колонок в уборных нет.</strong> Музыка туда не подаётся вообще.</p>
+  </div>
+
+  <div class="zone">
+    <div class="zone-head"><h3>Летник</h3><span class="tag t-todo">Новая зона</span></div>
+    <div class="readout">
+      <span class="chipnum"><b>5 столов</b>26–67 лк</span>
+      <span class="chipnum"><b>средне</b>≈51 лк</span>
+      <span class="chipnum"><b>звук</b>52,8–63,9 дБА</span>
+    </div>
+    <p>У объекта есть <strong>второй вход — со стороны летника</strong>, которого в нашей модели зон не было вовсе. Все пять столов там ниже норматива, средне вдвое.</p>
+    <p>Звук в этой зоне не «громче», а <em>непредсказуемый</em>: размах до 10 дБ внутри одной точки. Ровный шум мозг отфильтровывает, скачущий — нет [<span class="tag t-fact">Доказано</span>]. Худшая зона зала по совокупности света и звука.</p>
+    <p>Сам летник не измерен ни по одному параметру.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <p class="eyebrow">Звук</p>
+    <h2>Ровный уровень, но техника вместо музыки</h2>
+  </div>
+  <p>Восемь точек с включённой музыкой уложились в полосу <span class="num">52,6–58,7</span> дБА. Против света с его 47-кратным разбросом это идеальная однородность. Но <strong>ухо нашло то, чего не видит прибор:</strong> одинаковые децибелы набраны разным звуком.</p>
+  <div class="tbl-scroll">
+    <table>
+      <caption>Что доминирует на слух</caption>
+      <thead><tr><th>Зона</th><th class="n">дБА</th><th>Источник звука</th></tr></thead>
+      <tbody>
+        <tr><td>Вход, ресепшн, проход</td><td class="n">54,6–58,7</td><td>музыка</td></tr>
+        <tr><td>Камчатка</td><td class="n">53,8–54,6</td><td><strong>вентиляция</strong></td></tr>
+        <tr><td>Бар</td><td class="n">54,6–59,7</td><td><strong>холодильники</strong></td></tr>
+        <tr><td>Уборные</td><td class="n">50,9–52,5</td><td>колонок нет</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Максимум оказался у ресепшена, минимум — у сцены. То есть фоновая система обслуживает переднюю часть заведения, а в зал музыка доходит остатками. <strong>Значит на камчатке надо не убавлять, а добавлять.</strong></p>
+  <ul class="clean">
+    <li><span class="tag t-fact">Доказано</span><span><strong>Зоны не разведены.</strong> На панели SABO SA-3550U есть регуляторы SP1–SP4, но ни один не меняет звук — работает только общий. Все линии сведены в один выход параллельно. Проверено на месте. <em>Тот же дефект, что на Жароковой, при другом железе.</em></span></li>
+    <li><span class="tag t-fact">Доказано</span><span>Источник музыки — <strong>USB-флешка</strong> в MP3-плеере усилителя. Не стриминг, не курируемый плейлист. Играет то, что кто-то когда-то записал, одинаково днём и вечером. Никто музыкой не управляет.</span></li>
+    <li><span class="tag t-fact">Доказано</span><span>Запас по уровню есть: 54–58 дБА в пустом зале при вечерней цели 68–72. На Жароковой громкость выкручена в максимум и запаса нет вовсе.</span></li>
+  </ul>
+  <p><strong>Два объекта из двух проверенных — один дефект зонирования.</strong> С высокой вероятностью так на всех четырёх. Это сетевая проблема инфраструктуры, а не локальная недоделка, и считать её надо сетевой сметой. Пока так, физически невозможно сделать бар тише зала, дать камчатке музыку, не залив весь объект, или различить день и вечер.</p>
+</section>
+
+<section>
+  <div class="sec-head">
+    <p class="eyebrow">Воздух</p>
+    <h2>Объект нагревается сам, без гостей</h2>
+  </div>
+  <div class="readout">
+    <span class="chipnum"><b>11:04</b>26,7 °C</span>
+    <span class="chipnum"><b>15:45</b>27,0 °C</span>
+    <span class="chipnum"><b>16:00</b>27,5 °C</span>
+    <span class="chipnum"><b>16:20</b>28,1 °C</span>
+    <span class="chipnum"><b>17:00</b>28,3 °C</span>
+  </div>
+  <p><strong>Плюс 1,6 °C за шесть часов при пустом зале.</strong> Гостей нет, нагрузки нет. Мы договорились начинать вечер с 21–22 °C, потому что гости сами добавляют около трёх градусов. Здесь запас съеден до открытия, и цель отсюда недостижима вообще.</p>
+  <p>Влажность 30,8–36,9 % — внутри обычной комфортной полосы 30–60 % [<span class="tag t-none">Профстандарт</span>]. Не проблема, фиксируем.</p>
+  <ul class="clean">
+    <li><span class="tag t-hyp">Гипотеза</span><span>Громкий холодильник и растущая температура — <strong>один дефект, а не два.</strong> Забитый конденсатор заставляет компрессор работать дольше: громче гудит и больше греет зал. Проверяется осмотром решёток за две минуты. Если забиты — чистка стоит ноль и лечит сразу шум и градусы.</span></li>
+    <li><span class="tag t-todo">Измерить</span><span>Салфетка показывает наличие тяги, но не объём. Расход воздуха не измерен — нужен анемометр.</span></li>
+  </ul>
+</section>
+
+<section>
+  <div class="sec-head">
+    <p class="eyebrow">Приоритеты</p>
+    <h2>Что делать, в порядке отношения пользы к цене</h2>
+  </div>
+  <div class="prio">
+    <article>
+      <div class="top"><h3>1. Посмотреть на потолок над двумя мёртвыми зонами</h3><span class="cost">0 ₸</span></div>
+      <p>Светильник есть и лампа перегорела? Светильник на другой линии? Светильника нет вовсе? Ответ определяет, стоит починка тысячу тенге или смету. Заодно проверить щиток: не выключена ли часть линий зала.</p>
+    </article>
+    <article>
+      <div class="top"><h3>2. Решётки конденсаторов холодильников</h3><span class="cost">0 ₸ · 2 мин</span></div>
+      <p>Один взгляд закрывает связку «шум плюс жара». Если забиты — чистка бесплатна и снимает сразу два симптома.</p>
+    </article>
+    <article>
+      <div class="top"><h3>3. Лампа на первой стороне бара</h3><span class="cost">низкая</span></div>
+      <p>Единственный точечный дефект зоны, которая в остальном лучшая на объекте.</p>
+    </article>
+    <article>
+      <div class="top"><h3>4. Вечерний заезд по тем же точкам</h3><span class="cost">0 ₸ · время</span></div>
+      <p>Не «доделать», а обязательная вторая половина. Весь свет измерен днём при открытых дверях; вечерние цифры будут другими и ниже. Плюс звук с гостями и с группой — там появится эффект Ломбарда, которого сегодня не было.</p>
+    </article>
+    <article>
+      <div class="top"><h3>5. Свет над столами зала</h3><span class="cost">смета</span></div>
+      <p>Пятнадцать столов из восемнадцати ниже норматива. Решение — прицельные светильники над столешницами, как в пилоте Жароковой (12 треков, GU10 10 Вт, 3000 K, Ra 90+, луч 36–40°, ≈82 тыс ₸ на 9 столов). Считать после вечернего замера, не раньше.</p>
+    </article>
+    <article>
+      <div class="top"><h3>6. Зонирование звука</h3><span class="cost">сетевая смета</span></div>
+      <p>Решено: тракт переделывается, техник осмотрит. Ключевой вопрос к нему — <strong>выходы усилителя это линия 100 В или низкоомные 4–16 Ω?</strong> Одно слово, а цена зонирования отличается на порядок: на трансляционной линии зоны получаются пассивными регуляторами без перекладки кабеля.</p>
+    </article>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <p class="eyebrow">Честные границы</p>
+    <h2>Чего этот замер не говорит</h2>
+  </div>
+  <ul>
+    <li><strong>Это день, а не вечер.</strong> Свет мерился при открытых входных дверях с вкладом улицы. Норматив 100–150 лк — вечерний. Дневной набор вечерний не заменяет.</li>
+    <li><strong>Полы в зале не измерены ни у одного стола.</strong> Значит соотношение стол/пол — то, что решает, выделяется стол из фона или тонет — по залу не посчитано.</li>
+    <li><strong>Звук ниже ~58 дБА у нашего прибора под вопросом.</strong> Он устойчиво упирается в 50 в тишине при паспортных 30. Всё выше 60 дБА достоверно; утренние 51–52 в уборных — на границе.</li>
+    <li><strong>Вертикальной освещённости у зеркал нет.</strong> Горизонтальный замер у раковины не отвечает на вопрос «видно ли лицо».</li>
+    <li><strong>Улица и сам летник не измерены вовсе.</strong></li>
+    <li><strong>Уставки усилителя не зафиксированы</strong> — положения ручек по фото не читаются. Пока их нет, замеры звука невоспроизводимы.</li>
+    <li><strong>Отсутствие жалоб на свет не означает успех.</strong> О свете говорят только когда плохо.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="sec-head">
+    <p class="eyebrow">Открыто</p>
+    <h2>Вопросы, на которые нужен человек, а не прибор</h2>
+  </div>
+  <ol>
+    <li>Вытяжка в уборной крутится постоянно или включается вместе со светом? Когда её последний раз чистили?</li>
+    <li>Кто и когда записал USB-флешку с музыкой?</li>
+    <li>Включён ли Dynacord L2800 одновременно с фоновой системой во время живых сетов — то есть воспроизводится ли здесь дефект Жароковой с двумя системами разом?</li>
+    <li>Выключатели зала: просто вкл/выкл или есть регулировка? Сколько линий и все ли включены?</li>
+    <li>Почему сняли предыдущий аромамаркетинг? <em>Висит с самого начала и стоит денег дважды, если не выяснить.</em></li>
+  </ol>
+</section>
+
+<footer>
+  <p>Все цифры — прямые показания приборов на месте гостя. Замеры звука с телефона в проекте не используются: расхождение с прибором 20–35 дБ.</p>
+  <p>Сырые данные: <span class="num">chechil-sensory-os/measurements/2026-09-09_rozybakieva_*.csv</span></p>
+</footer>
+
+</div>
+
+<script>
+  const rows = [
+    ["Справа от входа",           174, 188, "ok",   "выше полосы"],
+    ["Камчатка, ближние",         143, 143, "ok",   "в норме"],
+    ["Слева от входа",            109, 116, "ok",   "в норме"],
+    ["У сцены",                    97,  97, "warn", "ниже нормы"],
+    ["Камчатка, средние",          92,  92, "warn", "ниже нормы"],
+    ["Камчатка справа, 3 стола",   88,  88, "warn", "ниже нормы"],
+    ["Слева у бара",               80,  81, "warn", "ниже нормы"],
+    ["Летник, дальний",            60,  60, "warn", "ниже нормы"],
+    ["Камчатка, дальние 2",        57,  57, "warn", "ниже нормы"],
+    ["Летник, стол 3",             55,  55, "warn", "ниже нормы"],
+    ["Камчатка, дальние",          50,  58, "warn", "ниже нормы"],
+    ["Летник, слева",              48,  49, "warn", "ниже нормы"],
+    ["Летник, стол 2",             67,  67, "warn", "ниже нормы"],
+    ["У сцены, глубина",           31,  33, "warn", "ниже нормы"],
+    ["Камчатка, дальний стол",     30,  30, "warn", "ниже нормы"],
+    ["Летник, вход",               26,  27, "crit", "провал"],
+    ["Камчатка, середина",          5,   6, "crit", "провал"],
+    ["Справа у бара",               4,   6, "crit", "провал"]
+  ];
+  const MAX = 200;
+  const fmt = (a, b) => a === b ? String(a) : a + "–" + b;
+  document.getElementById("chart").innerHTML = rows
+    .slice()
+    .sort((x, y) => (y[1] + y[2]) - (x[1] + x[2]))
+    .map(([name, lo, hi, state, verdict]) => {
+      const mid = (lo + hi) / 2;
+      const w = Math.max(1.2, (mid / MAX) * 100);
+      return '<div class="row" tabindex="0" role="group" aria-label="' + name + ', ' + fmt(lo, hi) + ' люкс, ' + verdict + '">'
+        + '<span class="name">' + name + '</span>'
+        + '<span class="track"><span class="zone"></span><span class="bar ' + state + '" style="width:' + w.toFixed(1) + '%"></span></span>'
+        + '<span class="val ' + state + '">' + fmt(lo, hi) + '</span>'
+        + '</div>';
+    })
+    .join("");
+</script>

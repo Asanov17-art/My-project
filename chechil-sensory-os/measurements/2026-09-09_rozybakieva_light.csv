@@ -4,3 +4,7 @@ date,time,object,zone,point,surface,lux,height_cm,mode,light_sources,dimmer,note
 2026-09-09,11:0x,Rozybakieva,Z3,reception_standing,воздух (не поверхность),195,~104,MIN,?,?,"MIN того же замера; диапазон 195-200"
 2026-09-09,11:2x,Rozybakieva,Z6,wc_men_sink,раковина,328,?,MAX,?,?,"T=26.9C; RH=34.8%; фон - нерж. раковина"
 2026-09-09,11:2x,Rozybakieva,Z6,wc_men_sink,раковина,227,?,MIN,?,?,"MIN того же замера; разброс 227-328 требует объяснения"
+2026-09-09,11:1x,Rozybakieva,Z3,entrance_floor,пол,124,0,MAX,?,?,"тот же пятачок, что и замер на ~104 см"
+2026-09-09,11:1x,Rozybakieva,Z3,entrance_floor,пол,119,0,MIN,?,?,"пара к 195-200; соотношение ~1.6:1"
+2026-09-09,11:3x,Rozybakieva,Z6,wc_women_sink,раковина,162,?,MAX,?,?,"T=26.8C; RH=36.7%; шум 51.8 dBA SLOW"
+2026-09-09,11:3x,Rozybakieva,Z6,wc_women_sink,раковина,136,?,MIN,?,?,"T=26.8C; RH=36.9%; шум 52.5 dBA SLOW; музыки нет"

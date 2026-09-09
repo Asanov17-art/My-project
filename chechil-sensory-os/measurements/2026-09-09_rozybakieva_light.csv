@@ -53,3 +53,5 @@ date,time,object,zone,point,surface,lux,height_cm,mode,light_sources,dimmer,note
 2026-09-09,15:1x,Rozybakieva,Z4,entry_from_terrace_table3,столешница,55,~75,MAX,"искусственный (дневной режим)","нет — один сценарий весь день","T=26.5C; RH=32.4%; шум 59.9 dBA SLOW; прислано только MAX, MIN не снят"
 2026-09-09,15:2x,Rozybakieva,Z4,entry_from_terrace_left,столешница,49,~75,MAX,"искусственный (дневной режим)","нет — один сценарий весь день","T=25.9C; RH=33.2%; шум 53.9 dBA SLOW"
 2026-09-09,15:2x,Rozybakieva,Z4,entry_from_terrace_left,столешница,48,~75,MIN,"искусственный (дневной режим)","нет — один сценарий весь день","T=26.0C; RH=33.1%; шум 63.5 dBA SLOW; размах шума ~10 дБ в одной точке"
+2026-09-09,15:3x,Rozybakieva,Z4,entry_from_terrace_left_last,столешница,60,~75,MAX,"искусственный (дневной режим)","нет — один сценарий весь день","T=26.0C; RH=32.5%; шум 53.2 dBA SLOW"
+2026-09-09,15:3x,Rozybakieva,Z4,entry_from_terrace_left_last,столешница,60,~75,MIN,"искусственный (дневной режим)","нет — один сценарий весь день","T=26.0C; RH=32.5%; шум 52.8 dBA SLOW; шум здесь как в основном зале"

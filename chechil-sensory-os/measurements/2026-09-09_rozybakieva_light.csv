@@ -32,3 +32,5 @@ date,time,object,zone,point,surface,lux,height_cm,mode,light_sources,dimmer,note
 2026-09-09,13:2x,Rozybakieva,Z4,kamchatka_left_tables,столешница,143,~75,MIN,"искусственный (дневной режим)","нет — один сценарий весь день","T=26.1C; RH=31.8%; шум 53.9 dBA SLOW; MAX=MIN, замер полностью стабилен"
 2026-09-09,13:3x,Rozybakieva,Z4,kamchatka_next_tables,столешница,92,~75,MAX,"искусственный (дневной режим)","нет — один сценарий весь день","T=26.1C; RH=31.8%; шум 54.7 dBA SLOW"
 2026-09-09,13:3x,Rozybakieva,Z4,kamchatka_next_tables,столешница,92,~75,MIN,"искусственный (дневной режим)","нет — один сценарий весь день","T=26.0C; RH=31.8%; шум 59.8 dBA SLOW; MAX=MIN, стабильно"
+2026-09-09,13:4x,Rozybakieva,Z4,kamchatka_far_tables,столешница,58,~75,MAX,"искусственный (дневной режим)","нет — один сценарий весь день","T=26.0C; RH=31.9%; шум 55.9 dBA SLOW"
+2026-09-09,13:4x,Rozybakieva,Z4,kamchatka_far_tables,столешница,50,~75,MIN,"искусственный (дневной режим)","нет — один сценарий весь день","T=26.0C; RH=31.8%; шум 55.8 dBA SLOW; камчатка гаснет вглубь 143-92-54"

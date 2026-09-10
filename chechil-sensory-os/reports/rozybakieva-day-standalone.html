@@ -154,6 +154,17 @@
   .meta dt,.meta .k{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
   .meta .v{font-family:var(--f-display);font-size:15px;font-weight:600;line-height:1.3}
 
+  /* ---- status strip ---- */
+  .status{
+    display:flex;flex-direction:column;gap:8px;
+    border-left:3px solid var(--warn);
+    background:var(--card);
+    padding:14px 16px;
+    margin-top:20px;
+  }
+  .status p{font-size:15.5px;line-height:1.5}
+  .status .head{font-family:var(--f-display);font-size:16px;font-weight:600;letter-spacing:-.005em}
+
   /* ---- verdict callout ---- */
   .verdict{
     border-left:3px solid var(--crit);
@@ -261,6 +272,14 @@
     <div><span class="k">Шумомер</span><span class="v">FNIRSI FDM01<br><span class="num" style="font-size:12px;font-weight:400;color:var(--muted)">dBA + SLOW</span></span></div>
   </div>
 </header>
+
+<div class="status">
+  <p class="eyebrow" style="color:var(--warn)">Статус на 10 сентября</p>
+  <p class="head">Сегодня на объект приезжает техник по звуку — но начинает с Жароковой</p>
+  <p>Розыбакиева в очереди после неё. Значит работы по звуку здесь пока не начинаются, и зонирование остаётся вопросом к технику, а не строкой сметы.</p>
+  <p><strong>Что спросить у него в первую очередь:</strong> выходы усилителя SABO SA-3550U — трансляционная линия 100 В / 70 В или низкоомные 4–16 Ω? Одно слово с задней панели, а цена зонирования отличается на порядок.</p>
+  <p>Работы по свету от этого не зависят и идут своим ходом.</p>
+</div>
 
 <section>
   <div class="verdict">

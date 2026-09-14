@@ -1,0 +1,239 @@
+<title>Дневной срез 4 мкр</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Serif:wght@400;600&display=swap">
+<style>
+  :root{
+    --paper:#f1f4f4;
+    --card:#fbfcfc;
+    --ink:#131a1c;
+    --ink-2:#33454a;
+    --muted:#566467;
+    --rule:#d3dcdb;
+    --rule-soft:#e3eae9;
+    --ok:#1a8a6a;
+    --warn:#a97207;
+    --crit:#bd2b52;
+    --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+    --f-body:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+    --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#101617;
+      --card:#161e20;
+      --ink:#e6edec;
+      --ink-2:#c2d0cf;
+      --muted:#8a9b9d;
+      --rule:#24302f;
+      --rule-soft:#1c2626;
+      --ok:#2aa093;
+      --warn:#c08a14;
+      --crit:#d9466a;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#101617;
+    --card:#161e20;
+    --ink:#e6edec;
+    --ink-2:#c2d0cf;
+    --muted:#8a9b9d;
+    --rule:#24302f;
+    --rule-soft:#1c2626;
+    --ok:#2aa093;
+    --warn:#c08a14;
+    --crit:#d9466a;
+  }
+
+  *{box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:730px;margin:0 auto;padding-block:34px 70px;padding-inline:22px;display:flex;flex-direction:column;gap:30px}
+  @media (max-width:560px){ body{font-size:16px} .wrap{padding-block:24px 56px;padding-inline:16px;gap:24px} }
+
+  h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance}
+  h1{font-size:clamp(28px,6.8vw,40px);font-weight:700;letter-spacing:-.022em;line-height:1.04}
+  h3{font-size:17px;font-weight:600;line-height:1.3}
+  p{margin:0}
+  .eyebrow{font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+  header{display:flex;flex-direction:column;gap:11px;padding-bottom:22px;border-bottom:2px solid var(--ink)}
+  header .lede{color:var(--ink-2);font-size:17px}
+  .meta{font-family:var(--f-mono);font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 18px;padding-top:4px}
+
+  .block{display:flex;flex-direction:column;gap:12px}
+  .block > h2{color:var(--muted);font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
+
+  .verdict{border-left:3px solid var(--crit);background:var(--card);padding:15px 17px;display:flex;flex-direction:column;gap:8px}
+  .verdict .head{font-family:var(--f-display);font-size:19px;font-weight:600;line-height:1.22}
+  .verdict p{font-size:15.5px;color:var(--ink-2)}
+
+  ul{margin:0;padding-left:1.15em;display:flex;flex-direction:column;gap:9px}
+  li{padding-left:2px;color:var(--ink-2)}
+  li strong{color:var(--ink);font-weight:600}
+
+  .tablewrap{overflow-x:auto;border:1px solid var(--rule-soft)}
+  table{border-collapse:collapse;width:100%;min-width:440px;background:var(--card)}
+  caption{caption-side:bottom;text-align:left;padding:9px 2px 0;font-size:13px;color:var(--muted);font-family:var(--f-body)}
+  th,td{text-align:left;padding:9px 13px;border-bottom:1px solid var(--rule-soft);font-size:14.5px;vertical-align:baseline}
+  thead th{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);font-weight:500;border-bottom:1px solid var(--rule)}
+  tbody tr:last-child td{border-bottom:none}
+  td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ink)}
+  td.zone{color:var(--ink)}
+  .pill{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;padding:2px 7px;border:1px solid currentColor;border-radius:2px}
+  .p-ok{color:var(--ok)}
+  .p-warn{color:var(--warn)}
+  .p-crit{color:var(--crit)}
+
+  .find{display:flex;flex-direction:column;gap:7px;padding:14px 0;border-top:1px solid var(--rule)}
+  .find:first-of-type{border-top:none;padding-top:0}
+  .find p{color:var(--ink-2);font-size:15.5px}
+  .find .tag{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;color:var(--muted)}
+
+  .steps{display:flex;flex-direction:column;gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft)}
+  .steps > div{background:var(--card);padding:12px 15px;display:flex;flex-direction:column;gap:4px}
+  .steps .cost{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .steps .what{font-size:15.5px;color:var(--ink-2)}
+  .steps .what strong{color:var(--ink);font-weight:600}
+
+  footer{padding-top:20px;border-top:1px solid var(--rule);color:var(--muted);font-size:13.5px;line-height:1.5;display:flex;flex-direction:column;gap:9px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Chechil Sensory OS · Сарыарка, 4 мкр</p>
+  <h1>Дневной срез, 14 сентября</h1>
+  <p class="lede">Свет и звук по приборам: три этажа, терраса и переходы между ними. Замер дневной, зал пустой — что это значит и чего не описывает, сказано ниже.</p>
+  <p class="meta"><span>24 точки по свету</span><span>3 точки по звуку</span><span>UNI-T UT383 · FNIRSI, dBA SLOW</span><span>25,5 °C · 39,5 % RH</span></p>
+</header>
+
+<div class="verdict">
+  <p class="head">Света на объекте примерно хватает. Он разложен случайно.</p>
+  <p>Между соседними столами одного ряда — разница в пять раз. Между столами одного этажа — в двадцать. Проход к туалетам светлее, чем столы, за которыми едят. Это не вопрос мощности ламп и не вопрос бюджета: линии светильников и линии столов на объекте не совпадают.</p>
+</div>
+
+<section class="block">
+  <h2>Что показал прибор</h2>
+  <div class="tablewrap">
+  <table>
+    <thead>
+      <tr><th>Зона</th><th>Столешница, лк</th><th>Против нормы 100–150</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="zone">2 этаж · ряд у окна, 4 стола</td><td class="num">256–421</td><td><span class="pill p-warn">выше — но это окно</span></td></tr>
+      <tr><td class="zone">2 этаж · середина, стол 2</td><td class="num">127–128</td><td><span class="pill p-ok">в норме</span></td></tr>
+      <tr><td class="zone">2 этаж · середина, стол 1</td><td class="num">62–77</td><td><span class="pill p-warn">ниже</span></td></tr>
+      <tr><td class="zone">2 этаж · середина, стол 3</td><td class="num">26–29</td><td><span class="pill p-crit">ниже в 4 раза</span></td></tr>
+      <tr><td class="zone">2 этаж · правая зона, начало и конец</td><td class="num">71–76</td><td><span class="pill p-warn">ниже</span></td></tr>
+      <tr><td class="zone">2 этаж · глубина зала</td><td class="num">18 и 34</td><td><span class="pill p-crit">ниже в 4–8 раз</span></td></tr>
+      <tr><td class="zone">1 этаж · столы у окна</td><td class="num">148–157</td><td><span class="pill p-ok">в норме</span></td></tr>
+      <tr><td class="zone">1 этаж · круглые столы</td><td class="num">55–56</td><td><span class="pill p-warn">ниже</span></td></tr>
+      <tr><td class="zone">1 этаж · столы у стены</td><td class="num">31–38</td><td><span class="pill p-crit">ниже в 3 раза</span></td></tr>
+      <tr><td class="zone">Терраса · край у улицы</td><td class="num">164–169</td><td><span class="pill p-ok">в норме</span></td></tr>
+      <tr><td class="zone">Терраса · середина, под навесом</td><td class="num">62–63</td><td><span class="pill p-warn">ниже</span></td></tr>
+    </tbody>
+  </table>
+  <caption>Все замеры при включённом свете и дневном окне. Прибор на столешнице, ~75 см; в двух точках середины второго этажа — в руке над столом.</caption>
+  </div>
+  <p style="color:var(--ink-2);font-size:15.5px">Из одиннадцати обеденных зон в норму попали три. В двух из них норму даёт окно или улица. <strong>Светильник сам, без дневного света, вытягивает стол в норму ровно в одном месте на объекте</strong> — середина второго этажа, стол 2.</p>
+</section>
+
+<section class="block">
+  <h2>Почему так вышло</h2>
+
+  <div class="find">
+    <h3>Линия света идёт мимо линии столов</h3>
+    <p>На втором этаже светильники висят на тросе, и трос пересекает зал по диагонали. Второй трек проложен вдоль стены, вплотную к ней, — а столы стоят дальше. Стол попадает под свет или не попадает случайно: отсюда 128 лк и 26 лк у соседей.</p>
+    <p class="tag">[ФАКТ по фото + 11 точек замера]</p>
+  </div>
+
+  <div class="find">
+    <h3>Свет работает на отделку, а не на посадку</h3>
+    <p>Споты засвечивают потолок и белую стену; столы на переднем плане темнее фона. Потолок при этом тёмно-оливковый и почти ничего не возвращает в зал — то, что ушло вбок и вверх, потеряно.</p>
+    <p class="tag">[ФАКТ по фото; физика отражения — ДОКАЗАНО]</p>
+  </div>
+
+  <div class="find">
+    <h3>Приоритет перевёрнут: ярко там, где идут мимо</h3>
+    <p>Проход к туалетам и курилке — 80–88 лк. Столы в глубине зала — 18–34 лк. Гость идёт по яркому проходу, садится за тёмный стол, и стол кажется ему темнее, чем он есть по прибору: глаз адаптирован к более высокому уровню.</p>
+    <p class="tag">[ФАКТ, замер; адаптация — ДОКАЗАНО]</p>
+  </div>
+
+  <div class="find">
+    <h3>Лампы открытые, на тёмном потолке</h3>
+    <p>Дискомфортный блик — это яркость источника относительно фона, к которому привык глаз. Тёмный потолок плюс голая яркая лампа даёт худшее сочетание. На Розыбакиева ровно от этого гости закрывали светильники костерами. Здесь это ещё не проверено из посадки.</p>
+    <p class="tag">[ГИПОТЕЗА — ПРОВЕРИТЬ: сесть за стол под треком]</p>
+  </div>
+</section>
+
+<section class="block">
+  <h2>Два места, где вопрос не про атмосферу</h2>
+  <ul>
+    <li><strong>Лестница на второй этаж — 23–24 лк.</strong> Это безопасность, а не оформление. Человек должен видеть край ступени, а спускается он вечером, после алкоголя, с яркого прохода (80–88 лк) на тёмную лестницу. Привыкание к темноте идёт минутами, лестницу проходят за секунды. Точную норму по СНиП здесь не называю, но профессиональные нормы для лестниц везде выше прилегающего помещения, а не ниже. [ПРОВЕРИТЬ норму]</li>
+    <li><strong>Вход сразу за дверью — 30–31 лк, и там ступени.</strong> С улицы днём — тысячи люкс. Первые секунды внутри гость видит плохо, и именно в эти секунды под ним ступени.</li>
+    <li><strong>Бар — 50–54 лк на рабочей поверхности.</strong> Бар не контактный, гости за ним не сидят, значит атмосферу там держать не нужно вообще. Это рабочее место с ножом, льдом и стеклом, и оно освещено хуже гостевого стола у окна.</li>
+  </ul>
+</section>
+
+<section class="block">
+  <h2>Что на объекте сделано правильно</h2>
+  <ul>
+    <li><strong>Терраса — единственная зона сети, где светотехника собрана осмысленно.</strong> Подвесы висят над рядом столов. Все поверхности светлые — колонны, потолок, мебель; тёмный только пол. Это верная иерархия отражений и прямая противоположность Розыбакиева.</li>
+    <li><strong>У террасы открывается крыша.</strong> 62 лк с закрытой, около 3000 с открытой — разница в полсотни раз. Это готовый инструмент управления светом, механический и бесплатный. Вопрос к смене: по какому правилу её открывают. Если «когда жарко» — светом никто не управляет, он получается побочным эффектом от температуры.</li>
+    <li><strong>Три независимые системы звука</strong> — первый этаж, второй этаж, терраса, у террасы свой микшер. Это первое реальное зонирование в сети: то, что Жарокова и Розыбакиева собираются покупать, здесь уже стоит.</li>
+  </ul>
+</section>
+
+<section class="block">
+  <h2>Звук: три точки и одна честная оговорка</h2>
+  <p style="color:var(--ink-2);font-size:15.5px">Первый этаж 52,9–54 dBA. Второй — столько же. Третья точка 53,7. Днём громкость на всех этажах одна, это подтверждено на месте.</p>
+  <p style="color:var(--ink-2);font-size:15.5px">Значит <strong>разведение громкостей по этажам, ради которого этот объект и интересен, днём не работает и днём не проверяется.</strong> Вся проверка зонирования переносится на вечер. Дневные 53 dBA в пустом зале — это фон, а не диагноз: основной вклад в громкость зала дают сами гости, а не колонки.</p>
+</section>
+
+<section class="block">
+  <h2>Что делать</h2>
+  <div class="steps">
+    <div>
+      <p class="cost">Бесплатно, сегодня</p>
+      <p class="what"><strong>Подписать панель выключателей.</strong> Шесть накладных коробок, ни одной подписи. Скорее всего именно поэтому свет включают один раз и больше не трогают.</p>
+    </div>
+    <div>
+      <p class="cost">Бесплатно, сегодня</p>
+      <p class="what"><strong>Закрыть коробку с оголёнными жилами</strong> — из неё торчат провода без крышки. Задача электрику на один визит.</p>
+    </div>
+    <div>
+      <p class="cost">Бесплатно, требует проверки</p>
+      <p class="what"><strong>Подвинуть столы под существующие светильники.</strong> На втором этаже это может закрыть большую часть провала — эталон уже стоит в зале, это стол с 128 лк.</p>
+    </div>
+    <div>
+      <p class="cost">Копейки, час работы</p>
+      <p class="what"><strong>Свет на рабочую зону бара.</strong> Лента или спот вниз под верхнюю полку. Гостю не видно, бармену видно всё.</p>
+    </div>
+    <div>
+      <p class="cost">Деньги, но немного</p>
+      <p class="what"><strong>Лестница и вход.</strong> Подсветка ступеней. Это единственный пункт списка, который делается не ради выручки.</p>
+    </div>
+    <div>
+      <p class="cost">Деньги, после проверок</p>
+      <p class="what"><strong>Новая линия подвесов над рядами столов</strong> там, где посадку двигать нельзя. Объём считаем после того, как станет ясно, ездят ли споты по тросу.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <h2>Чего в этом отчёте нет</h2>
+  <ul>
+    <li><strong>Вечера.</strong> Второй этаж и терраса живут за счёт окна и улицы; вечером этот вклад исчезает, а компенсировать его нечем. Дневная цифра там не описывает вечер. Вечерний выезд обязателен.</li>
+    <li><strong>Звука с гостями.</strong> Три дневные точки в пустом зале — это всё, что есть. Зонирование проверяется только вечером.</li>
+    <li><strong>Вертикальной освещённости</strong> у зеркала на входе и на лице хостес. Горизонтальные 40–93 лк про это не говорят ничего.</li>
+    <li><strong>Трёх проверок руками</strong>, по минуте каждая: ездят ли споты по тросу; что даст снятие декоративных лепестков с одного спота; сколько останется, если выключить свет на 10 секунд в глубине зала.</li>
+    <li><strong>Третьего этажа.</strong> Летом закрыт, открывается к холодам.</li>
+  </ul>
+</section>
+
+<footer>
+  <p>Замер дневной, зал пустой, свет — единственный штатный сценарий объекта, включён с утра и не переключался.</p>
+  <p>Терраса горит по сезону: с холодами её закроют и до весны мерить будет нечего. Если вечерний выезд делать один — делать его туда.</p>
+</footer>
+
+</div>

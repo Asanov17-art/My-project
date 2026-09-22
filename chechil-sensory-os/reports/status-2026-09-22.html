@@ -1,0 +1,170 @@
+<title>Статус на 22 сентября</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Serif:wght@400;600&display=swap">
+<style>
+  :root{
+    --paper:#f1f4f4; --card:#fbfcfc; --ink:#131a1c; --ink-2:#33454a; --muted:#566467;
+    --rule:#d3dcdb; --rule-soft:#e3eae9; --ok:#1a8a6a; --warn:#a97207; --crit:#bd2b52;
+    --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+    --f-body:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+    --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#101617; --card:#161e20; --ink:#e6edec; --ink-2:#c2d0cf; --muted:#8a9b9d;
+      --rule:#24302f; --rule-soft:#1c2626; --ok:#2aa093; --warn:#c08a14; --crit:#d9466a;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#101617; --card:#161e20; --ink:#e6edec; --ink-2:#c2d0cf; --muted:#8a9b9d;
+    --rule:#24302f; --rule-soft:#1c2626; --ok:#2aa093; --warn:#c08a14; --crit:#d9466a;
+  }
+
+  *{box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:730px;margin:0 auto;padding-block:34px 70px;padding-inline:22px;display:flex;flex-direction:column;gap:30px}
+  @media (max-width:560px){ body{font-size:16px} .wrap{padding-block:24px 56px;padding-inline:16px;gap:24px} }
+
+  h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance}
+  h1{font-size:clamp(28px,6.8vw,40px);font-weight:700;letter-spacing:-.022em;line-height:1.04}
+  h3{font-size:17px;font-weight:600;line-height:1.3}
+  p{margin:0}
+  .eyebrow{font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+  header{display:flex;flex-direction:column;gap:11px;padding-bottom:22px;border-bottom:2px solid var(--ink)}
+  header .lede{color:var(--ink-2);font-size:17px}
+
+  .block{display:flex;flex-direction:column;gap:12px}
+  .block > h2{color:var(--muted);font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
+
+  .alarm{border-left:3px solid var(--crit);background:var(--card);padding:15px 17px;display:flex;flex-direction:column;gap:8px}
+  .alarm .head{font-family:var(--f-display);font-size:19px;font-weight:600;line-height:1.22}
+  .alarm p{font-size:15.5px;color:var(--ink-2)}
+
+  ul{margin:0;padding-left:1.15em;display:flex;flex-direction:column;gap:9px}
+  ol{margin:0;padding-left:1.35em;display:flex;flex-direction:column;gap:9px}
+  li{padding-left:2px;color:var(--ink-2)}
+  li strong{color:var(--ink);font-weight:600}
+
+  .rows{display:flex;flex-direction:column;gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft)}
+  .rows > div{background:var(--card);padding:12px 15px;display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
+  .rows .state{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;padding:2px 7px;border:1px solid currentColor;border-radius:2px}
+  .s-done{color:var(--ok)}
+  .s-next{color:var(--warn)}
+  .rows .what{font-size:15.5px;color:var(--ink-2);flex:1 1 15rem;min-width:0}
+  .rows .what strong{color:var(--ink);font-weight:600}
+  .rows .q{display:block;font-family:var(--f-mono);font-size:11.5px;color:var(--muted);padding-top:4px}
+
+  .note{display:flex;flex-direction:column;gap:7px;padding:14px 0;border-top:1px solid var(--rule)}
+  .note:first-of-type{border-top:none;padding-top:0}
+  .note p{color:var(--ink-2);font-size:15.5px}
+  .note .tag{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;color:var(--muted)}
+
+  footer{padding-top:20px;border-top:1px solid var(--rule);color:var(--muted);font-size:13.5px;line-height:1.5;display:flex;flex-direction:column;gap:9px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Chechil Sensory OS · статус</p>
+  <h1>22 сентября: где мы сейчас</h1>
+  <p class="lede">Что сделано, что приходит завтра и одна вещь, которую нужно решить до завтра, иначе данные за неделю пропадут. Всё записано со слов — приборами ничего из этого пока не подтверждено.</p>
+</header>
+
+<section class="block">
+  <h2>Сделано</h2>
+  <div class="rows">
+    <div>
+      <span class="state s-done">готово</span>
+      <p class="what"><strong>Зона VIP — линия протянута.</strong> Тест 23 сентября.
+        <span class="q">Уточнить: звук, свет или оба; какой объект; трансляционная линия или низкоомная</span></p>
+    </div>
+    <div>
+      <span class="state s-done">готово</span>
+      <p class="what"><strong>Зона рядом с предВИПом — линия протянута.</strong> Тест там же.</p>
+    </div>
+    <div>
+      <span class="state s-done">у дизайнера</span>
+      <p class="what"><strong>Картины в работе.</strong> Делаются по размеру, эскизы 23 сентября.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <h2>Завтра, 23 сентября</h2>
+  <div class="rows">
+    <div>
+      <span class="state s-next">приходит</span>
+      <p class="what"><strong>Аромадиффузоры и масла.</strong> Тестируем в день получения.</p>
+    </div>
+    <div>
+      <span class="state s-next">монтаж</span>
+      <p class="what"><strong>Жарокова: светильники на входе и в тамбуре.</strong> Замена.</p>
+    </div>
+    <div>
+      <span class="state s-next">тест</span>
+      <p class="what"><strong>VIP и предВИП — проверка протянутых линий.</strong></p>
+    </div>
+  </div>
+</section>
+
+<div class="alarm">
+  <p class="head">Всё включается в один день — и это стирает результат</p>
+  <p>Завтра одновременно: аромат, картины, новый свет на Жароковой и новые линии в VIP. Если через две недели выручка сдвинется, приписать сдвиг чему-то одному будет нельзя. Мы потеряем не деньги, а возможность узнать, что именно сработало.</p>
+  <p>Лечится без задержек и без затрат — нужно только записывать и не смешивать объекты.</p>
+</div>
+
+<section class="block">
+  <h2>Что сделать до завтра</h2>
+  <ol>
+    <li><strong>Зафиксировать базу.</strong> Выручка на посадочное место по зонам VIP и предВИП за 2–4 недели до изменений. Без базы сравнивать будет не с чем, и восстановить её потом уже нельзя.</li>
+    <li><strong>Записать дату и час включения каждого элемента отдельно.</strong> Одна строка в заметках на телефон: что, где, когда включили.</li>
+    <li><strong>Не менять свет и аромат на одном объекте в один день.</strong> Разнести хотя бы на несколько дней — этого достаточно, чтобы сигналы не слиплись.</li>
+    <li><strong>При перестановке столов номер стола остаётся за физическим местом.</strong> Вся методика сравнения завязана на номера в кассе.</li>
+  </ol>
+</section>
+
+<section class="block">
+  <h2>Как тестировать аромат</h2>
+
+  <div class="note">
+    <h3>Силу аромата нельзя оценивать, стоя в зале</h3>
+    <p>Обоняние адаптируется за минуты: тот, кто внутри, перестаёт чувствовать запах, который гость ловит с порога. Поэтому оценивает только тот, кто зашёл с улицы. Протокол: выйти на 10 минут, зайти, оценить в первые 10 секунд, повторить с другим циклом.</p>
+    <p class="tag">[ДОКАЗАНО — обонятельная адаптация]</p>
+  </div>
+
+  <div class="note">
+    <h3>Начинать с минимума и наращивать</h3>
+    <p>Передозировка заметнее и хуже недобора: гости жалуются на «слишком сильно», а не на «слабо». У Q1000PRO цикл работа/пауза 3–300 секунд — диапазон широкий, крайние значения не нужны. Ставить только в зоне входа: в санблоке доминирует хлорка, там получится смесь, а не образ.</p>
+    <p class="tag">[ФАКТ — спецификация прибора; зона входа — решение 9 сентября]</p>
+  </div>
+
+  <div class="note">
+    <h3>Картина под аромат — это правильный порядок</h3>
+    <p>Соответствие аромата обстановке — самая устойчивая находка в литературе по сенсорике, она держится на мета-анализе. Несовпадающий аромат работает хуже, чем отсутствие аромата вообще. Так что подбирать картину под аромат методологически верно.</p>
+    <p>Одна оговорка: аромат и картина, включённые вместе, дальше измеряются только вместе. Разделить их вклад потом не получится — и это нормально, если мы заранее согласны считать их одним решением.</p>
+    <p class="tag">[ДОКАЗАНО — конгруэнтность; ОГРАНИЧЕНИЕ — неразделимость вкладов]</p>
+  </div>
+
+  <div class="note">
+    <h3>Цена масла в месяц до сих пор не посчитана</h3>
+    <p>Это единственная строка, мешающая закрыть экономику аромата. От аренды за 45 000 ₸ в месяц мы уходили ради своего прибора — но прибор дешёвый, а расходник может съесть всю экономию. Завтра при тесте засечь расход в миллилитрах за сутки на выбранном цикле.</p>
+    <p class="tag">[ИЗМЕРИТЬ]</p>
+  </div>
+</section>
+
+<section class="block">
+  <h2>Остаётся в очереди</h2>
+  <ul>
+    <li><strong>Вечерний выезд на 4 мкр.</strong> Терраса горит по сезону: её закроют с холодами, и до весны мерить будет нечего. Второй этаж вечером тоже не описан — днём там работает окно, вечером компенсировать нечем.</li>
+    <li><strong>Розыбакиева.</strong> Три числа для сметы: сколько столов, сколько «кривых» светильников снимать, подвесы на треке или на фиксированных точках.</li>
+    <li><strong>Плейлист на Розыбакиева</strong> по-прежнему не играет — там включают треки вразнобой.</li>
+  </ul>
+</section>
+
+<footer>
+  <p>Всё в этом документе записано со слов и приборами не подтверждено. Пометки «уточнить» — это не придирки: без них строка в проекте останется догадкой, а не фактом.</p>
+</footer>
+
+</div>

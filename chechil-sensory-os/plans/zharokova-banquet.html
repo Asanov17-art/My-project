@@ -1,0 +1,231 @@
+<title>Банкетные сборки Жарокова</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Serif:wght@400;600&display=swap">
+<style>
+  :root{
+    --paper:#f1f4f4; --card:#fbfcfc; --ink:#131a1c; --ink-2:#33454a; --muted:#566467;
+    --rule:#d3dcdb; --rule-soft:#e3eae9;
+    --ok:#1a8a6a; --warn:#a97207; --crit:#bd2b52;
+    --ok-fill:#dff0ea; --warn-fill:#f7ead2; --crit-fill:#f7dde4;
+    --plan-bg:#ffffff; --plan-line:#9aa8ab; --sofa:#c3cfd1;
+    --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+    --f-body:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+    --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#101617; --card:#161e20; --ink:#e6edec; --ink-2:#c2d0cf; --muted:#8a9b9d;
+      --rule:#24302f; --rule-soft:#1c2626;
+      --ok:#2aa093; --warn:#c08a14; --crit:#d9466a;
+      --ok-fill:#13312f; --warn-fill:#312611; --crit-fill:#331620;
+      --plan-bg:#0c1112; --plan-line:#44565a; --sofa:#33484c;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#101617; --card:#161e20; --ink:#e6edec; --ink-2:#c2d0cf; --muted:#8a9b9d;
+    --rule:#24302f; --rule-soft:#1c2626;
+    --ok:#2aa093; --warn:#c08a14; --crit:#d9466a;
+    --ok-fill:#13312f; --warn-fill:#312611; --crit-fill:#331620;
+    --plan-bg:#0c1112; --plan-line:#44565a; --sofa:#33484c;
+  }
+
+  *{box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto;padding-block:32px 70px;padding-inline:20px;display:flex;flex-direction:column;gap:28px}
+  @media (max-width:560px){ body{font-size:16px} .wrap{padding-block:22px 54px;padding-inline:16px;gap:22px} }
+
+  h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance}
+  h1{font-size:clamp(27px,6.4vw,38px);font-weight:700;letter-spacing:-.022em;line-height:1.05}
+  h3{font-size:17px;font-weight:600;line-height:1.28}
+  p{margin:0}
+  .eyebrow{font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+  header{display:flex;flex-direction:column;gap:10px;padding-bottom:20px;border-bottom:2px solid var(--ink)}
+  header .lede{color:var(--ink-2);font-size:16.5px;max-width:62ch}
+
+  .block{display:flex;flex-direction:column;gap:13px}
+  .block > h2{color:var(--muted);font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
+
+  .rule-why{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft)}
+  .rule-why > div{background:var(--card);padding:16px;display:flex;flex-direction:column;gap:10px}
+  .rule-why svg{display:block;width:100%;height:auto;max-width:280px;margin:0 auto}
+  .verdict{font-family:var(--f-mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase}
+  .v-ok{color:var(--ok)} .v-no{color:var(--crit)}
+  .rule-why p{font-size:14.5px;color:var(--ink-2)}
+
+  .cfg{display:flex;flex-direction:column;gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft)}
+  .cfg > article{background:var(--card);padding:16px 17px;display:grid;grid-template-columns:200px 1fr;gap:18px;align-items:start}
+  @media (max-width:620px){ .cfg > article{grid-template-columns:1fr;gap:12px} }
+  .cfg svg{display:block;width:100%;height:auto;background:var(--plan-bg);border:1px solid var(--rule-soft)}
+  .cfg .txt{display:flex;flex-direction:column;gap:7px}
+  .cfg .n{font-family:var(--f-mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+  .cfg p{font-size:15.5px;color:var(--ink-2)}
+  .cfg .cost{font-family:var(--f-mono);font-size:12.5px;color:var(--ink)}
+
+  .sofa{fill:var(--sofa)}
+  .tjoin{fill:var(--ok-fill);stroke:var(--ok);stroke-width:2.5}
+  .tfree{fill:none;stroke:var(--plan-line);stroke-width:2.5}
+  .tround{fill:var(--crit-fill);stroke:var(--crit);stroke-width:2.5}
+  .gap{stroke:var(--crit);stroke-width:2.5;stroke-dasharray:5 4;fill:none}
+
+  ul{margin:0;padding-left:1.15em;display:flex;flex-direction:column;gap:9px}
+  li{padding-left:2px;color:var(--ink-2)}
+  li strong{color:var(--ink);font-weight:600}
+
+  .ask{border-left:3px solid var(--warn);background:var(--card);padding:14px 16px;display:flex;flex-direction:column;gap:9px}
+  .ask .head{font-family:var(--f-display);font-size:17px;font-weight:600;line-height:1.25}
+  .ask p,.ask li{font-size:15.5px;color:var(--ink-2)}
+
+  footer{padding-top:18px;border-top:1px solid var(--rule);color:var(--muted);font-size:13.5px;line-height:1.5}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Chechil Sensory OS · Жарокова</p>
+  <h1>Как собирается банкет</h1>
+  <p class="lede">Банкеты бывают от 10 до 150 человек, а зал один. Значит нужна не новая расстановка, а набор сборок, которые смена собирает под размер гостя. Вот принцип и четыре сборки.</p>
+</header>
+
+<section class="block">
+  <h2>Почему круглые столы ломают банкет</h2>
+  <div class="rule-why">
+    <div>
+      <svg viewBox="0 0 280 110" role="img" aria-label="Четыре прямоугольных стола, составленные в сплошную линию">
+        <rect class="tjoin" x="20" y="35" width="58" height="42"/>
+        <rect class="tjoin" x="78" y="35" width="58" height="42"/>
+        <rect class="tjoin" x="136" y="35" width="58" height="42"/>
+        <rect class="tjoin" x="194" y="35" width="58" height="42"/>
+      </svg>
+      <p class="verdict v-ok">Прямоугольные — стыкуются</p>
+      <p>Сплошная столешница, гости сидят подряд, посуда ставится в линию.</p>
+    </div>
+    <div>
+      <svg viewBox="0 0 280 110" role="img" aria-label="Круглый стол между прямоугольными оставляет нерабочие углы">
+        <rect class="tjoin" x="20" y="35" width="58" height="42"/>
+        <circle class="tround" cx="131" cy="56" r="40"/>
+        <rect class="tjoin" x="184" y="35" width="58" height="42"/>
+        <path class="gap" d="M 91 35 L 78 35 L 78 77 L 91 77"/>
+        <path class="gap" d="M 171 35 L 184 35 L 184 77 L 171 77"/>
+      </svg>
+      <p class="verdict v-no">Круглый — не стыкуется</p>
+      <p>По краям остаются клинья, туда не сядешь и ничего не поставишь. Линия рвётся.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <h2>Четыре сборки</h2>
+  <div class="cfg">
+
+    <article>
+      <svg viewBox="0 0 200 130" role="img" aria-label="Банкет на 20: одна линия вдоль дивана">
+        <rect class="sofa" x="18" y="22" width="164" height="16" rx="7"/>
+        <rect class="tjoin" x="22" y="42" width="38" height="30"/>
+        <rect class="tjoin" x="60" y="42" width="38" height="30"/>
+        <rect class="tjoin" x="98" y="42" width="38" height="30"/>
+        <rect class="tjoin" x="136" y="42" width="38" height="30"/>
+        <circle class="tfree" cx="48" cy="104" r="16"/>
+        <circle class="tfree" cx="104" cy="104" r="16"/>
+        <circle class="tfree" cx="160" cy="104" r="16"/>
+      </svg>
+      <div class="txt">
+        <p class="n">до 20 человек</p>
+        <h3>Линия вдоль дивана</h3>
+        <p>Столы 17–20 уже стоят так. Диван с одной стороны, стулья с другой, трек идёт ровно над линией.</p>
+        <p class="cost">Двигать ничего не надо. Зал работает как обычно.</p>
+      </div>
+    </article>
+
+    <article>
+      <svg viewBox="0 0 200 130" role="img" aria-label="Банкет на 40: две параллельные линии">
+        <rect class="sofa" x="18" y="14" width="164" height="14" rx="6"/>
+        <rect class="tjoin" x="22" y="32" width="38" height="26"/>
+        <rect class="tjoin" x="60" y="32" width="38" height="26"/>
+        <rect class="tjoin" x="98" y="32" width="38" height="26"/>
+        <rect class="tjoin" x="136" y="32" width="38" height="26"/>
+        <rect class="tjoin" x="22" y="78" width="38" height="26"/>
+        <rect class="tjoin" x="60" y="78" width="38" height="26"/>
+        <rect class="tjoin" x="98" y="78" width="38" height="26"/>
+        <rect class="tjoin" x="136" y="78" width="38" height="26"/>
+        <rect class="sofa" x="18" y="108" width="164" height="14" rx="6"/>
+      </svg>
+      <div class="txt">
+        <p class="n">до 40 человек</p>
+        <h3>Две линии вдоль двух диванов</h3>
+        <p>Вторая линия собирается у противоположного дивана. Обе лежат вдоль своих треков, свет не теряется.</p>
+        <p class="cost">Двигаются только столы центра. Круглые остаются на местах.</p>
+      </div>
+    </article>
+
+    <article>
+      <svg viewBox="0 0 200 130" role="img" aria-label="Банкет на 80: три линии, круглые вынесены">
+        <rect class="sofa" x="18" y="12" width="164" height="12" rx="5"/>
+        <rect class="tjoin" x="22" y="28" width="38" height="22"/>
+        <rect class="tjoin" x="60" y="28" width="38" height="22"/>
+        <rect class="tjoin" x="98" y="28" width="38" height="22"/>
+        <rect class="tjoin" x="136" y="28" width="38" height="22"/>
+        <rect class="tjoin" x="22" y="58" width="38" height="22"/>
+        <rect class="tjoin" x="60" y="58" width="38" height="22"/>
+        <rect class="tjoin" x="98" y="58" width="38" height="22"/>
+        <rect class="tjoin" x="136" y="58" width="38" height="22"/>
+        <rect class="tjoin" x="22" y="88" width="38" height="22"/>
+        <rect class="tjoin" x="60" y="88" width="38" height="22"/>
+        <rect class="tjoin" x="98" y="88" width="38" height="22"/>
+        <rect class="tjoin" x="136" y="88" width="38" height="22"/>
+        <rect class="sofa" x="18" y="114" width="164" height="12" rx="5"/>
+      </svg>
+      <div class="txt">
+        <p class="n">до 80 человек</p>
+        <h3>Три линии, круглые уезжают</h3>
+        <p>Весь центр собирается в параллельные линии. Круглые столы отсюда надо убрать — они занимают место и в линию не встают.</p>
+        <p class="cost">Нужно место, куда их деть. Это решается заранее, не в вечер банкета.</p>
+      </div>
+    </article>
+
+    <article>
+      <svg viewBox="0 0 200 130" role="img" aria-label="Банкет на 150: весь верхний зал в линиях">
+        <rect class="sofa" x="14" y="10" width="172" height="10" rx="4"/>
+        <g>
+          <rect class="tjoin" x="18" y="24" width="33" height="18"/><rect class="tjoin" x="51" y="24" width="33" height="18"/><rect class="tjoin" x="84" y="24" width="33" height="18"/><rect class="tjoin" x="117" y="24" width="33" height="18"/><rect class="tjoin" x="150" y="24" width="33" height="18"/>
+          <rect class="tjoin" x="18" y="48" width="33" height="18"/><rect class="tjoin" x="51" y="48" width="33" height="18"/><rect class="tjoin" x="84" y="48" width="33" height="18"/><rect class="tjoin" x="117" y="48" width="33" height="18"/><rect class="tjoin" x="150" y="48" width="33" height="18"/>
+          <rect class="tjoin" x="18" y="72" width="33" height="18"/><rect class="tjoin" x="51" y="72" width="33" height="18"/><rect class="tjoin" x="84" y="72" width="33" height="18"/><rect class="tjoin" x="117" y="72" width="33" height="18"/><rect class="tjoin" x="150" y="72" width="33" height="18"/>
+          <rect class="tjoin" x="18" y="96" width="33" height="18"/><rect class="tjoin" x="51" y="96" width="33" height="18"/><rect class="tjoin" x="84" y="96" width="33" height="18"/><rect class="tjoin" x="117" y="96" width="33" height="18"/><rect class="tjoin" x="150" y="96" width="33" height="18"/>
+        </g>
+        <rect class="sofa" x="14" y="118" width="172" height="10" rx="4"/>
+      </svg>
+      <div class="txt">
+        <p class="n">100–150 человек</p>
+        <h3>Весь верхний зал</h3>
+        <p>По плану в верхнем зале около 167 мест. Банкет на 150 туда входит, но зал в этот вечер перестаёт работать как обычный — а-ля карт уходит вниз, к сцене, там около 114 мест.</p>
+        <p class="cost">Это решение по деньгам, а не по мебели: считаем банкет против обычной выручки зала.</p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section class="block">
+  <h2>Что уже работает в вашу пользу</h2>
+  <ul>
+    <li><strong>Линии вдоль диванов уже собраны.</strong> Столы 17–20 стоят сплошной линией, диван с одной стороны, стулья с другой. Банкет на 16–20 человек сажается без единого движения.</li>
+    <li><strong>Треки идут параллельно линиям диванов.</strong> Это главное: длинный стол лежит под своей ниткой света, а не поперёк неё. Середина и края освещены одинаково.</li>
+    <li><strong>Светильник есть над каждым столом.</strong> На других объектах сети этого нет — там светильники висят над проходами.</li>
+  </ul>
+</section>
+
+<div class="ask">
+  <p class="head">Три вещи, без которых сборки останутся схемой</p>
+  <ul>
+    <li><strong>Куда девать круглые столы.</strong> На банкете от 80 человек они не встают в линию и занимают место. Склад, другой зал или край зоны для тех, кто не за общим столом — решить заранее, а не в вечер банкета.</li>
+    <li><strong>Ширина и высота прямоугольных столов по типам.</strong> Если ширины не совпадают, линия соберётся со ступеньками, и это видно с порога. Померить рулеткой, по одному столу каждого типа.</li>
+    <li><strong>Сколько стульев каждого типа.</strong> В зале их минимум четыре вида: синие кресла, светлые деревянные, чёрные металлические, серо-зелёные. На банкетной линии разнобой заметен сразу — нужно знать, хватает ли одного типа на самую длинную линию.</li>
+  </ul>
+</div>
+
+<footer>
+  <p>Схемы показывают принцип сборки, а не метраж: точные расстояния считаются после замера столов и проходов. Номер стола при любой перестановке остаётся за физическим местом — на 52 номера в кассе завязано сравнение выручки.</p>
+</footer>
+
+</div>

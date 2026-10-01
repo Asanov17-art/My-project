@@ -1,0 +1,203 @@
+<title>Какие столы зарабатывают</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Serif:wght@400;600&display=swap">
+<style>
+  :root{
+    --paper:#f1f4f4; --card:#fbfcfc; --ink:#131a1c; --ink-2:#33454a; --muted:#566467;
+    --rule:#d3dcdb; --rule-soft:#e3eae9;
+    --ok:#1a8a6a; --warn:#a97207; --crit:#bd2b52;
+    --grid:#dde5e4; --plot:#fbfcfc;
+    --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+    --f-body:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+    --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#101617; --card:#161e20; --ink:#e6edec; --ink-2:#c2d0cf; --muted:#8a9b9d;
+      --rule:#24302f; --rule-soft:#1c2626;
+      --ok:#2aa093; --warn:#c08a14; --crit:#d9466a;
+      --grid:#24302f; --plot:#161e20;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#101617; --card:#161e20; --ink:#e6edec; --ink-2:#c2d0cf; --muted:#8a9b9d;
+    --rule:#24302f; --rule-soft:#1c2626;
+    --ok:#2aa093; --warn:#c08a14; --crit:#d9466a;
+    --grid:#24302f; --plot:#161e20;
+  }
+
+  *{box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:780px;margin:0 auto;padding-block:32px 70px;padding-inline:20px;display:flex;flex-direction:column;gap:28px}
+  @media (max-width:560px){ body{font-size:16px} .wrap{padding-block:22px 54px;padding-inline:16px;gap:22px} }
+
+  h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance}
+  h1{font-size:clamp(27px,6.4vw,38px);font-weight:700;letter-spacing:-.022em;line-height:1.05}
+  h3{font-size:17px;font-weight:600;line-height:1.28}
+  p{margin:0}
+  .eyebrow{font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+  header{display:flex;flex-direction:column;gap:10px;padding-bottom:20px;border-bottom:2px solid var(--ink)}
+  header .lede{color:var(--ink-2);font-size:16.5px;max-width:62ch}
+  .meta{font-family:var(--f-mono);font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 18px;padding-top:4px}
+
+  .block{display:flex;flex-direction:column;gap:12px}
+  .block > h2{color:var(--muted);font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
+
+  .lead{border-left:3px solid var(--ok);background:var(--card);padding:15px 17px;display:flex;flex-direction:column;gap:8px}
+  .lead .head{font-family:var(--f-display);font-size:19px;font-weight:600;line-height:1.22}
+  .lead p{font-size:15.5px;color:var(--ink-2)}
+
+  figure{margin:0;display:flex;flex-direction:column;gap:9px}
+  .figwrap{overflow-x:auto;background:var(--plot);border:1px solid var(--rule-soft)}
+  svg{display:block;min-width:520px;width:100%;height:auto}
+  figcaption{font-size:13.5px;color:var(--muted);line-height:1.45}
+  .ax{font-family:"IBM Plex Mono",monospace;font-size:12px;fill:var(--muted)}
+  .rowlab{font-family:"IBM Plex Serif",Georgia,serif;font-size:14px;fill:var(--ink)}
+  .val{font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;fill:var(--ink);font-variant-numeric:tabular-nums}
+  .bar{fill:var(--ok)}
+  .refline{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:5 4;fill:none}
+  .gridline{stroke:var(--grid);stroke-width:1}
+  .lineser{fill:none;stroke:var(--ok);stroke-width:2;stroke-linejoin:round}
+  .dot{fill:var(--ok);stroke:var(--plot);stroke-width:2}
+
+  table{border-collapse:collapse;width:100%;background:var(--card);min-width:420px}
+  .tablewrap{overflow-x:auto;border:1px solid var(--rule-soft)}
+  th,td{text-align:left;padding:9px 13px;border-bottom:1px solid var(--rule-soft);font-size:14.5px}
+  thead th{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);font-weight:500;border-bottom:1px solid var(--rule)}
+  tbody tr:last-child td{border-bottom:none}
+  td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+  ul{margin:0;padding-left:1.15em;display:flex;flex-direction:column;gap:9px}
+  li{padding-left:2px;color:var(--ink-2)}
+  li strong{color:var(--ink);font-weight:600}
+
+  .caveat{border-left:3px solid var(--warn);background:var(--card);padding:14px 16px;display:flex;flex-direction:column;gap:9px}
+  .caveat .head{font-family:var(--f-display);font-size:17px;font-weight:600;line-height:1.25}
+  .caveat p,.caveat li{font-size:15.5px;color:var(--ink-2)}
+
+  footer{padding-top:18px;border-top:1px solid var(--rule);color:var(--muted);font-size:13.5px;line-height:1.5}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Chechil Sensory OS · Жарокова</p>
+  <h1>Какие столы зарабатывают</h1>
+  <p class="lede">Выгрузка из кассы за август и сентябрь. Проверяем наблюдение из зала: гости выбирают углы и диваны, а не стулья в середине.</p>
+  <p class="meta"><span>1 августа — 1 октября 2026</span><span>1707 посадок</span><span>45 столов · 273 места</span><span>83,5 млн ₸</span></p>
+</header>
+
+<div class="lead">
+  <p class="head">Наблюдение подтвердилось. Разрыв больше, чем ожидалось.</p>
+  <p>Место у дивана приносит <strong>527 тысяч ₸ за два месяца</strong>, место за восьмёркой в центре зала — <strong>142 тысячи</strong>. Разница в 3,7 раза на одном и том же объекте, в одном зале, при одном меню.</p>
+</div>
+
+<section class="block">
+  <h2>Выручка на посадочное место, август–сентябрь</h2>
+  <figure>
+    <div class="figwrap">
+    <svg viewBox="0 0 640 270" role="img" aria-label="Столбчатая диаграмма: выручка на посадочное место по группам столов, от 527 до 142 тысяч тенге">
+      <line class="refline" x1="438" y1="22" x2="438" y2="232"/>
+      <text class="ax" x="438" y="248" text-anchor="middle">среднее по залу 306 тыс.</text>
+
+      <text class="rowlab" x="0" y="46" dominant-baseline="central">Линия 17–21, у дивана</text>
+      <rect class="bar" x="200" y="35" width="410" height="22" rx="4"/>
+      <text class="val" x="198" y="46" text-anchor="end" dominant-baseline="central">527</text>
+
+      <text class="rowlab" x="0" y="86" dominant-baseline="central">Диваны 22–25</text>
+      <rect class="bar" x="200" y="75" width="353" height="22" rx="4"/>
+      <text class="val" x="198" y="86" text-anchor="end" dominant-baseline="central">454</text>
+
+      <text class="rowlab" x="0" y="126" dominant-baseline="central">Столы 32, 33</text>
+      <rect class="bar" x="200" y="115" width="288" height="22" rx="4"/>
+      <text class="val" x="198" y="126" text-anchor="end" dominant-baseline="central">371</text>
+
+      <text class="rowlab" x="0" y="166" dominant-baseline="central">Круглые 26, 30, 31</text>
+      <rect class="bar" x="200" y="155" width="188" height="22" rx="4"/>
+      <text class="val" x="198" y="166" text-anchor="end" dominant-baseline="central">242</text>
+
+      <text class="rowlab" x="0" y="206" dominant-baseline="central">Восьмёрки 27, 28, 29</text>
+      <rect class="bar" x="200" y="195" width="110" height="22" rx="4"/>
+      <text class="val" x="198" y="206" text-anchor="end" dominant-baseline="central">142</text>
+
+      <text class="ax" x="200" y="22" text-anchor="start">тысяч ₸ на одно посадочное место за два месяца</text>
+    </svg>
+    </div>
+    <figcaption>Группы внутри зоны 17–33 плюс пунктир — среднее по всему залу. Чем ближе стол к стене и дивану, тем больше он приносит.</figcaption>
+  </figure>
+</section>
+
+<section class="block">
+  <h2>Те же числа таблицей</h2>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Группа</th><th>Мест</th><th>Посадок</th><th>₸ на место</th></tr></thead>
+    <tbody>
+      <tr><td>Линия 17–21, у дивана</td><td class="num">20</td><td class="num">247</td><td class="num">527 497</td></tr>
+      <tr><td>Диваны 22–25</td><td class="num">22</td><td class="num">158</td><td class="num">454 294</td></tr>
+      <tr><td>Столы 32, 33</td><td class="num">13</td><td class="num">92</td><td class="num">370 752</td></tr>
+      <tr><td>Весь зал, среднее</td><td class="num">273</td><td class="num">1707</td><td class="num">306 055</td></tr>
+      <tr><td>Круглые 26, 30, 31</td><td class="num">18</td><td class="num">103</td><td class="num">241 784</td></tr>
+      <tr><td>Восьмёрки 27, 28, 29</td><td class="num">24</td><td class="num">118</td><td class="num">141 680</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section class="block">
+  <h2>Что это значит для перестановки</h2>
+  <ul>
+    <li><strong>Диван-остров в центре оправдан данными.</strong> Идея поставить диван посередине превращает худшие места зала в места со спинкой. Разрыв, который он закрывает, — от 142 до 527 тысяч на место.</li>
+    <li><strong>Восьмёрки 27, 28, 29 — главный кандидат на изменение.</strong> 24 места в центре зоны приносят меньше всех на объекте. Большой стол в открытом поле редко садится полностью: 118 посадок на 24 места за два месяца.</li>
+    <li><strong>Круглые столы в центре работают лучше восьмёрок</strong>, хотя и хуже периметра. То есть проблема не в форме стола, а в положении: открытая середина зала проигрывает стене в любом исполнении.</li>
+    <li><strong>Размер разрыва.</strong> Если бы центр 26–31 работал на уровне среднего по залу, за два месяца он дал бы примерно на 5 миллионов больше. Это не прогноз и не обещание — это размер щели, в которую стоит смотреть.</li>
+  </ul>
+</section>
+
+<div class="caveat">
+  <p class="head">Чего эти данные НЕ доказывают</p>
+  <p><strong>Мы не знаем, гости выбирают эти места или их туда сажают.</strong> Если хостес по привычке ведёт первых гостей к диванам, рейтинг покажет привычку хостес, а не предпочтение гостя. По кассе эти две причины неотличимы.</p>
+  <p>Проверяется наблюдением: вечер в зале, записывать, какие столы предлагают первыми и как часто гость просит другой. Полчаса работы, и альтернативное объяснение либо отпадает, либо подтверждается.</p>
+  <p>Ещё: в выгрузке нет числа гостей в чеке. Выручка на место считалась по паспортной вместимости стола, а не по фактической посадке.</p>
+</div>
+
+<section class="block">
+  <h2>Побочная находка: пилот и контроль выровнены</h2>
+  <figure>
+    <div class="figwrap">
+    <svg viewBox="0 0 640 230" role="img" aria-label="График: недельное отношение выручки пилотной зоны к контрольной, колеблется от 0,67 до 1,45 вокруг единицы">
+      <line class="gridline" x1="50" y1="30" x2="612" y2="30"/>
+      <line class="gridline" x1="50" y1="170" x2="612" y2="170"/>
+      <text class="ax" x="44" y="30" text-anchor="end" dominant-baseline="central">1,5</text>
+      <text class="ax" x="44" y="170" text-anchor="end" dominant-baseline="central">0,6</text>
+      <line class="refline" x1="50" y1="108" x2="612" y2="108"/>
+      <text class="ax" x="616" y="108" text-anchor="start" dominant-baseline="central">1,0</text>
+      <polyline class="lineser" points="60,140 137,38 214,159 291,131 369,78 446,76 523,99 600,102"/>
+      <circle class="dot" cx="60" cy="140" r="5"/><circle class="dot" cx="137" cy="38" r="5"/>
+      <circle class="dot" cx="214" cy="159" r="5"/><circle class="dot" cx="291" cy="131" r="5"/>
+      <circle class="dot" cx="369" cy="78" r="5"/><circle class="dot" cx="446" cy="76" r="5"/>
+      <circle class="dot" cx="523" cy="99" r="5"/><circle class="dot" cx="600" cy="102" r="5"/>
+      <text class="ax" x="60" y="192" text-anchor="middle">нед. 32</text>
+      <text class="ax" x="214" y="192" text-anchor="middle">34</text>
+      <text class="ax" x="369" y="192" text-anchor="middle">36</text>
+      <text class="ax" x="523" y="192" text-anchor="middle">38</text>
+      <text class="ax" x="600" y="192" text-anchor="middle">39</text>
+      <text class="ax" x="50" y="214" text-anchor="start">отношение выручки на место: пилот 1–9 к контролю 38–44</text>
+    </svg>
+    </div>
+    <figcaption>За два месяца пилот и контроль дали почти одинаковую выручку на место — 261 и 265 тысяч ₸, отношение 1,03. База для сравнения ровная.</figcaption>
+  </figure>
+  <ul>
+    <li><strong>Хорошая новость:</strong> пилотная и контрольная зоны выбраны удачно. В среднем они неотличимы, значит разницу после изменений можно будет приписать изменениям.</li>
+    <li><strong>Плохая новость:</strong> недельный разброс от 0,67 до 1,45. Это обычный шум посадки, и он большой. Эффект меньше примерно 25–30% на недельных данных мы просто не увидим — он утонет.</li>
+    <li><strong>Что из этого следует:</strong> смотреть не раньше чем через 8–10 недель после изменений и только помесячно. Ранние выводы по одной-двум неделям будут выводами о шуме.</li>
+  </ul>
+</section>
+
+<footer>
+  <p>Источник: реестр чеков Жарокова, 1 августа — 1 октября 2026, 2494 закрытых чека, из них 1707 по столам зала. Отменённые чеки исключены. Вместимость столов взята из плана рассадки от 25.04.2025; для стола 10 принято 22 места из диапазона 20–25.</p>
+</footer>
+
+</div>

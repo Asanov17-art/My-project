@@ -49,12 +49,12 @@
   .lead p{font-size:15.5px;color:var(--ink-2)}
 
   figure{margin:0;display:flex;flex-direction:column;gap:9px}
-  .figwrap{overflow-x:auto;background:var(--plot);border:1px solid var(--rule-soft)}
-  svg{display:block;min-width:520px;width:100%;height:auto}
+  .figwrap{background:var(--plot);border:1px solid var(--rule-soft);padding:10px 12px}
+  svg{display:block;width:100%;height:auto}
   figcaption{font-size:13.5px;color:var(--muted);line-height:1.45}
-  .ax{font-family:"IBM Plex Mono",monospace;font-size:12px;fill:var(--muted)}
-  .rowlab{font-family:"IBM Plex Serif",Georgia,serif;font-size:14px;fill:var(--ink)}
-  .val{font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;fill:var(--ink);font-variant-numeric:tabular-nums}
+  .ax{font-family:"IBM Plex Mono",monospace;font-size:13px;fill:var(--muted)}
+  .rowlab{font-family:"IBM Plex Serif",Georgia,serif;font-size:15px;fill:var(--ink);font-weight:600}
+  .val{font-family:"IBM Plex Mono",monospace;font-size:15px;font-weight:600;fill:var(--ink);font-variant-numeric:tabular-nums}
   .bar{fill:var(--ok)}
   .refline{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:5 4;fill:none}
   .gridline{stroke:var(--grid);stroke-width:1}
@@ -98,31 +98,31 @@
   <h2>Выручка на посадочное место, август–сентябрь</h2>
   <figure>
     <div class="figwrap">
-    <svg viewBox="0 0 640 270" role="img" aria-label="Столбчатая диаграмма: выручка на посадочное место по группам столов, от 527 до 142 тысяч тенге">
-      <line class="refline" x1="438" y1="22" x2="438" y2="232"/>
-      <text class="ax" x="438" y="248" text-anchor="middle">среднее по залу 306 тыс.</text>
+    <svg viewBox="0 0 400 322" role="img" aria-label="Выручка на посадочное место по группам столов: от 527 до 142 тысяч тенге">
+      <text class="ax" x="0" y="10" text-anchor="start">тысяч ₸ на посадочное место за два месяца</text>
 
-      <text class="rowlab" x="0" y="46" dominant-baseline="central">Линия 17–21, у дивана</text>
-      <rect class="bar" x="200" y="35" width="410" height="22" rx="4"/>
-      <text class="val" x="198" y="46" text-anchor="end" dominant-baseline="central">527</text>
+      <text class="rowlab" x="0" y="36">Линия 17–21, у дивана</text>
+      <rect class="bar" x="0" y="44" width="390" height="18" rx="4"/>
+      <text class="val" x="386" y="53" text-anchor="end" dominant-baseline="central" fill="var(--plot)">527</text>
 
-      <text class="rowlab" x="0" y="86" dominant-baseline="central">Диваны 22–25</text>
-      <rect class="bar" x="200" y="75" width="353" height="22" rx="4"/>
-      <text class="val" x="198" y="86" text-anchor="end" dominant-baseline="central">454</text>
+      <text class="rowlab" x="0" y="94">Диваны 22–25</text>
+      <rect class="bar" x="0" y="102" width="336" height="18" rx="4"/>
+      <text class="val" x="332" y="111" text-anchor="end" dominant-baseline="central" fill="var(--plot)">454</text>
 
-      <text class="rowlab" x="0" y="126" dominant-baseline="central">Столы 32, 33</text>
-      <rect class="bar" x="200" y="115" width="288" height="22" rx="4"/>
-      <text class="val" x="198" y="126" text-anchor="end" dominant-baseline="central">371</text>
+      <text class="rowlab" x="0" y="152">Столы 32, 33</text>
+      <rect class="bar" x="0" y="160" width="274" height="18" rx="4"/>
+      <text class="val" x="270" y="169" text-anchor="end" dominant-baseline="central" fill="var(--plot)">371</text>
 
-      <text class="rowlab" x="0" y="166" dominant-baseline="central">Круглые 26, 30, 31</text>
-      <rect class="bar" x="200" y="155" width="188" height="22" rx="4"/>
-      <text class="val" x="198" y="166" text-anchor="end" dominant-baseline="central">242</text>
+      <text class="rowlab" x="0" y="210">Круглые 26, 30, 31</text>
+      <rect class="bar" x="0" y="218" width="179" height="18" rx="4"/>
+      <text class="val" x="187" y="227" text-anchor="start" dominant-baseline="central">242</text>
 
-      <text class="rowlab" x="0" y="206" dominant-baseline="central">Восьмёрки 27, 28, 29</text>
-      <rect class="bar" x="200" y="195" width="110" height="22" rx="4"/>
-      <text class="val" x="198" y="206" text-anchor="end" dominant-baseline="central">142</text>
+      <text class="rowlab" x="0" y="268">Восьмёрки 27, 28, 29</text>
+      <rect class="bar" x="0" y="276" width="105" height="18" rx="4"/>
+      <text class="val" x="113" y="285" text-anchor="start" dominant-baseline="central">142</text>
 
-      <text class="ax" x="200" y="22" text-anchor="start">тысяч ₸ на одно посадочное место за два месяца</text>
+      <line class="refline" x1="226" y1="40" x2="226" y2="298"/>
+      <text class="ax" x="226" y="314" text-anchor="middle">среднее по залу 306</text>
     </svg>
     </div>
     <figcaption>Группы внутри зоны 17–33 плюс пунктир — среднее по всему залу. Чем ближе стол к стене и дивану, тем больше он приносит.</figcaption>
@@ -167,24 +167,23 @@
   <h2>Побочная находка: пилот и контроль выровнены</h2>
   <figure>
     <div class="figwrap">
-    <svg viewBox="0 0 640 230" role="img" aria-label="График: недельное отношение выручки пилотной зоны к контрольной, колеблется от 0,67 до 1,45 вокруг единицы">
-      <line class="gridline" x1="50" y1="30" x2="612" y2="30"/>
-      <line class="gridline" x1="50" y1="170" x2="612" y2="170"/>
-      <text class="ax" x="44" y="30" text-anchor="end" dominant-baseline="central">1,5</text>
-      <text class="ax" x="44" y="170" text-anchor="end" dominant-baseline="central">0,6</text>
-      <line class="refline" x1="50" y1="108" x2="612" y2="108"/>
-      <text class="ax" x="616" y="108" text-anchor="start" dominant-baseline="central">1,0</text>
-      <polyline class="lineser" points="60,140 137,38 214,159 291,131 369,78 446,76 523,99 600,102"/>
-      <circle class="dot" cx="60" cy="140" r="5"/><circle class="dot" cx="137" cy="38" r="5"/>
-      <circle class="dot" cx="214" cy="159" r="5"/><circle class="dot" cx="291" cy="131" r="5"/>
-      <circle class="dot" cx="369" cy="78" r="5"/><circle class="dot" cx="446" cy="76" r="5"/>
-      <circle class="dot" cx="523" cy="99" r="5"/><circle class="dot" cx="600" cy="102" r="5"/>
-      <text class="ax" x="60" y="192" text-anchor="middle">нед. 32</text>
-      <text class="ax" x="214" y="192" text-anchor="middle">34</text>
-      <text class="ax" x="369" y="192" text-anchor="middle">36</text>
-      <text class="ax" x="523" y="192" text-anchor="middle">38</text>
-      <text class="ax" x="600" y="192" text-anchor="middle">39</text>
-      <text class="ax" x="50" y="214" text-anchor="start">отношение выручки на место: пилот 1–9 к контролю 38–44</text>
+    <svg viewBox="0 0 400 206" role="img" aria-label="Недельное отношение выручки пилотной зоны к контрольной: от 0,67 до 1,45 вокруг единицы">
+      <line class="gridline" x1="40" y1="26" x2="356" y2="26"/>
+      <line class="gridline" x1="40" y1="150" x2="356" y2="150"/>
+      <text class="ax" x="34" y="26" text-anchor="end" dominant-baseline="central">1,5</text>
+      <text class="ax" x="34" y="150" text-anchor="end" dominant-baseline="central">0,6</text>
+      <line class="refline" x1="40" y1="95" x2="356" y2="95"/>
+      <text class="ax" x="362" y="95" text-anchor="start" dominant-baseline="central">1,0</text>
+      <polyline class="lineser" points="48,123 92,33 136,140 180,115 224,69 268,67 312,87 356,90"/>
+      <circle class="dot" cx="48" cy="123" r="5"/><circle class="dot" cx="92" cy="33" r="5"/>
+      <circle class="dot" cx="136" cy="140" r="5"/><circle class="dot" cx="180" cy="115" r="5"/>
+      <circle class="dot" cx="224" cy="69" r="5"/><circle class="dot" cx="268" cy="67" r="5"/>
+      <circle class="dot" cx="312" cy="87" r="5"/><circle class="dot" cx="356" cy="90" r="5"/>
+      <text class="ax" x="48" y="172" text-anchor="middle">32</text>
+      <text class="ax" x="136" y="172" text-anchor="middle">34</text>
+      <text class="ax" x="224" y="172" text-anchor="middle">36</text>
+      <text class="ax" x="312" y="172" text-anchor="middle">38</text>
+      <text class="ax" x="0" y="196" text-anchor="start">неделя · пилот 1–9 к контролю 38–44</text>
     </svg>
     </div>
     <figcaption>За два месяца пилот и контроль дали почти одинаковую выручку на место — 261 и 265 тысяч ₸, отношение 1,03. База для сравнения ровная.</figcaption>

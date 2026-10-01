@@ -1,0 +1,217 @@
+<title>Перестановка зоны у бара</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Serif:wght@400;600&display=swap">
+<style>
+  :root{
+    --paper:#f1f4f4; --card:#fbfcfc; --ink:#131a1c; --ink-2:#33454a; --muted:#566467;
+    --rule:#d3dcdb; --rule-soft:#e3eae9;
+    --ok:#1a8a6a; --warn:#a97207; --crit:#bd2b52;
+    --ok-fill:#dff0ea; --crit-fill:#f7dde4; --warn-fill:#f7ead2;
+    --plot:#ffffff; --line:#9aa8ab; --sofa:#b9c7ca;
+    --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+    --f-body:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+    --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#101617; --card:#161e20; --ink:#e6edec; --ink-2:#c2d0cf; --muted:#8a9b9d;
+      --rule:#24302f; --rule-soft:#1c2626;
+      --ok:#2aa093; --warn:#c08a14; --crit:#d9466a;
+      --ok-fill:#13312f; --crit-fill:#331620; --warn-fill:#312611;
+      --plot:#0c1112; --line:#44565a; --sofa:#3a5054;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#101617; --card:#161e20; --ink:#e6edec; --ink-2:#c2d0cf; --muted:#8a9b9d;
+    --rule:#24302f; --rule-soft:#1c2626;
+    --ok:#2aa093; --warn:#c08a14; --crit:#d9466a;
+    --ok-fill:#13312f; --crit-fill:#331620; --warn-fill:#312611;
+    --plot:#0c1112; --line:#44565a; --sofa:#3a5054;
+  }
+
+  *{box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:880px;margin:0 auto;padding-block:32px 70px;padding-inline:20px;display:flex;flex-direction:column;gap:28px}
+  @media (max-width:560px){ body{font-size:16px} .wrap{padding-block:22px 54px;padding-inline:16px;gap:22px} }
+
+  h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance}
+  h1{font-size:clamp(27px,6.4vw,38px);font-weight:700;letter-spacing:-.022em;line-height:1.05}
+  h3{font-size:16px;font-weight:600;line-height:1.28}
+  p{margin:0}
+  .eyebrow{font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+  header{display:flex;flex-direction:column;gap:10px;padding-bottom:20px;border-bottom:2px solid var(--ink)}
+  header .lede{color:var(--ink-2);font-size:16.5px;max-width:62ch}
+
+  .block{display:flex;flex-direction:column;gap:13px}
+  .block > h2{color:var(--muted);font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
+
+  .pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft)}
+  .pair > figure{background:var(--card);margin:0;padding:15px;display:flex;flex-direction:column;gap:10px}
+  .pair svg{display:block;width:100%;height:auto;background:var(--plot);border:1px solid var(--rule-soft)}
+  .pair figcaption{font-size:14px;color:var(--ink-2);line-height:1.45}
+  .tag{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase}
+  .t-now{color:var(--crit)} .t-new{color:var(--ok)}
+
+  .sofa{fill:var(--sofa)}
+  .tgood{fill:var(--ok-fill);stroke:var(--ok);stroke-width:2}
+  .tbad{fill:var(--crit-fill);stroke:var(--crit);stroke-width:2}
+  .tmid{fill:var(--warn-fill);stroke:var(--warn);stroke-width:2}
+  .wall{stroke:var(--line);stroke-width:4;fill:none}
+  .tlab{font-family:"IBM Plex Mono",monospace;font-size:11px;fill:var(--ink);text-anchor:middle;dominant-baseline:central;font-weight:600}
+  .note{font-family:"IBM Plex Mono",monospace;font-size:10px;fill:var(--muted);text-anchor:middle}
+  .track{stroke:var(--muted);stroke-width:1.2;stroke-dasharray:4 5;fill:none}
+
+  .legend{display:flex;flex-wrap:wrap;gap:8px 18px;padding:11px 14px;background:var(--card);border:1px solid var(--rule-soft)}
+  .legend div{display:flex;align-items:center;gap:7px;font-size:13.5px;color:var(--ink-2)}
+  .sw{width:14px;height:14px;border-radius:2px;flex:none;border:1.5px solid}
+  .sw-g{background:var(--ok-fill);border-color:var(--ok)}
+  .sw-m{background:var(--warn-fill);border-color:var(--warn)}
+  .sw-b{background:var(--crit-fill);border-color:var(--crit)}
+  .sw-s{background:var(--sofa);border-color:var(--sofa)}
+
+  ul{margin:0;padding-left:1.15em;display:flex;flex-direction:column;gap:9px}
+  li{padding-left:2px;color:var(--ink-2)}
+  li strong{color:var(--ink);font-weight:600}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft)}
+  .cards > div{background:var(--card);padding:13px 15px;display:flex;flex-direction:column;gap:4px}
+  .cards .n{font-family:var(--f-mono);font-size:21px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink)}
+  .cards .k{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .cards .d{font-size:13.5px;color:var(--ink-2)}
+
+  .caveat{border-left:3px solid var(--warn);background:var(--card);padding:14px 16px;display:flex;flex-direction:column;gap:9px}
+  .caveat .head{font-family:var(--f-display);font-size:17px;font-weight:600;line-height:1.25}
+  .caveat p,.caveat li{font-size:15.5px;color:var(--ink-2)}
+
+  footer{padding-top:18px;border-top:1px solid var(--rule);color:var(--muted);font-size:13.5px;line-height:1.5}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Chechil Sensory OS · Жарокова · зона 17–33</p>
+  <h1>Диван в середину</h1>
+  <p class="lede">Касса показала: место у дивана приносит втрое больше, чем место в открытом центре. Вот как превратить центр в периметр, не потеряв ни одного посадочного места.</p>
+</header>
+
+<section class="block">
+  <h2>Что меняем</h2>
+  <div class="legend">
+    <div><span class="sw sw-s"></span>Диван</div>
+    <div><span class="sw sw-g"></span>527–454 тыс. ₸ на место</div>
+    <div><span class="sw sw-m"></span>242–371 тыс.</div>
+    <div><span class="sw sw-b"></span>142 тыс. — худшие места зала</div>
+  </div>
+  <div class="pair">
+
+    <figure>
+      <p class="tag t-now">Сейчас</p>
+      <svg viewBox="0 0 400 330" role="img" aria-label="Схема зоны сейчас: восьмёрки 27, 28, 29 стоят в открытом центре">
+        <path class="wall" d="M 24 16 L 376 16"/>
+        <path class="wall" d="M 376 16 L 376 314"/>
+        <rect class="sofa" x="30" y="20" width="340" height="11" rx="5"/>
+        <rect class="tgood" x="36" y="35" width="72" height="30"/><text class="tlab" x="72" y="50">25</text>
+        <rect class="tgood" x="116" y="35" width="72" height="30"/><text class="tlab" x="152" y="50">24</text>
+        <rect class="tgood" x="196" y="35" width="72" height="30"/><text class="tlab" x="232" y="50">23</text>
+        <rect class="tgood" x="276" y="35" width="72" height="30"/><text class="tlab" x="312" y="50">22</text>
+        <rect class="sofa" x="358" y="86" width="11" height="218" rx="5"/>
+        <rect class="tgood" x="312" y="90" width="42" height="38"/><text class="tlab" x="333" y="109">21</text>
+        <rect class="tgood" x="312" y="134" width="42" height="38"/><text class="tlab" x="333" y="153">20</text>
+        <rect class="tgood" x="312" y="178" width="42" height="38"/><text class="tlab" x="333" y="197">19</text>
+        <rect class="tgood" x="312" y="222" width="42" height="38"/><text class="tlab" x="333" y="241">18</text>
+        <rect class="tgood" x="312" y="266" width="42" height="38"/><text class="tlab" x="333" y="285">17</text>
+        <circle class="tmid" cx="62" cy="128" r="26"/><text class="tlab" x="62" y="128">26</text>
+        <circle class="tmid" cx="264" cy="118" r="26"/><text class="tlab" x="264" y="118">30</text>
+        <circle class="tmid" cx="264" cy="208" r="26"/><text class="tlab" x="264" y="208">31</text>
+        <rect class="tbad" x="118" y="96" width="38" height="128"/><text class="tlab" x="137" y="160">27</text>
+        <rect class="tbad" x="166" y="96" width="38" height="128"/><text class="tlab" x="185" y="160">28</text>
+        <rect class="tbad" x="214" y="96" width="38" height="128"/><text class="tlab" x="233" y="160">29</text>
+        <rect class="tmid" x="110" y="262" width="72" height="34"/><text class="tlab" x="146" y="279">33</text>
+        <rect class="tmid" x="196" y="262" width="80" height="34"/><text class="tlab" x="236" y="279">32</text>
+        <text class="note" x="185" y="246">24 места без спинки</text>
+      </svg>
+      <figcaption>Восьмёрки 27, 28, 29 стоят в открытом поле. 24 места, у которых нет ни стены, ни спинки, — и худшая выручка на объекте.</figcaption>
+    </figure>
+
+    <figure>
+      <p class="tag t-new">Предложение</p>
+      <svg viewBox="0 0 400 330" role="img" aria-label="Схема после перестановки: диван-остров в центре, по шесть столов с двух сторон от него">
+        <path class="wall" d="M 24 16 L 376 16"/>
+        <path class="wall" d="M 376 16 L 376 314"/>
+        <rect class="sofa" x="30" y="20" width="340" height="11" rx="5"/>
+        <rect class="tgood" x="36" y="35" width="72" height="30"/><text class="tlab" x="72" y="50">25</text>
+        <rect class="tgood" x="116" y="35" width="72" height="30"/><text class="tlab" x="152" y="50">24</text>
+        <rect class="tgood" x="196" y="35" width="72" height="30"/><text class="tlab" x="232" y="50">23</text>
+        <rect class="tgood" x="276" y="35" width="72" height="30"/><text class="tlab" x="312" y="50">22</text>
+        <rect class="sofa" x="358" y="86" width="11" height="218" rx="5"/>
+        <rect class="tgood" x="312" y="90" width="42" height="38"/><text class="tlab" x="333" y="109">21</text>
+        <rect class="tgood" x="312" y="134" width="42" height="38"/><text class="tlab" x="333" y="153">20</text>
+        <rect class="tgood" x="312" y="178" width="42" height="38"/><text class="tlab" x="333" y="197">19</text>
+        <rect class="tgood" x="312" y="222" width="42" height="38"/><text class="tlab" x="333" y="241">18</text>
+        <rect class="tgood" x="312" y="266" width="42" height="38"/><text class="tlab" x="333" y="285">17</text>
+
+        <rect class="sofa" x="178" y="92" width="22" height="146" rx="10"/>
+        <text class="note" x="189" y="84">диван-остров</text>
+
+        <rect class="tgood" x="128" y="96" width="46" height="40"/><text class="tlab" x="151" y="116">27a</text>
+        <rect class="tgood" x="128" y="142" width="46" height="40"/><text class="tlab" x="151" y="162">27b</text>
+        <rect class="tgood" x="128" y="188" width="46" height="40"/><text class="tlab" x="151" y="208">27c</text>
+        <rect class="tgood" x="204" y="96" width="46" height="40"/><text class="tlab" x="227" y="116">29a</text>
+        <rect class="tgood" x="204" y="142" width="46" height="40"/><text class="tlab" x="227" y="162">29b</text>
+        <rect class="tgood" x="204" y="188" width="46" height="40"/><text class="tlab" x="227" y="208">29c</text>
+        <text class="note" x="189" y="250">те же 24 места, теперь со спинкой</text>
+
+        <circle class="tmid" cx="62" cy="112" r="26"/><text class="tlab" x="62" y="112">26</text>
+        <circle class="tmid" cx="62" cy="186" r="26"/><text class="tlab" x="62" y="186">30</text>
+        <circle class="tmid" cx="62" cy="260" r="26"/><text class="tlab" x="62" y="260">31</text>
+        <rect class="tmid" x="128" y="262" width="72" height="34"/><text class="tlab" x="164" y="279">33</text>
+        <rect class="tmid" x="214" y="262" width="80" height="34"/><text class="tlab" x="254" y="279">32</text>
+
+        <path class="track" d="M 151 88 L 151 236"/>
+        <path class="track" d="M 227 88 L 227 236"/>
+        <path class="track" d="M 333 86 L 333 306"/>
+      </svg>
+      <figcaption>Диван-остров встаёт на место стола 28, вдоль трека. С каждой стороны — по три стола на четверых. Круглые уходят к левой стене. Пунктир — направление треков.</figcaption>
+    </figure>
+
+  </div>
+</section>
+
+<section class="block">
+  <h2>Что получается</h2>
+  <div class="cards">
+    <div><span class="k">Посадка</span><span class="n">97 → 97</span><span class="d">ни одного места не потеряно</span></div>
+    <div><span class="k">Мест со спинкой</span><span class="n">42 → 66</span><span class="d">+24 места у дивана</span></div>
+    <div><span class="k">Банкетных линий</span><span class="n">1 → 3</span><span class="d">остров даёт две новые</span></div>
+    <div><span class="k">Новая мебель</span><span class="n">1</span><span class="d">только двусторонний диван</span></div>
+  </div>
+</section>
+
+<section class="block">
+  <h2>Почему именно так</h2>
+  <ul>
+    <li><strong>Диван превращает центр в периметр.</strong> Гость за столом у острова получает ровно то же, что гость у стены: спинку, опору и защищённый тыл. По кассе это разница между 142 и 527 тысячами на место.</li>
+    <li><strong>Остров идёт вдоль трека, а не поперёк.</strong> Это главное техническое условие: столы по обе стороны остаются под своими нитками света. Поперечный остров перерезал бы линии и оставил столы в тени.</li>
+    <li><strong>Банкет не ломается, а расширяется.</strong> Вместо одной линии вдоль стены 17–21 получаются три параллельные: стена плюс две стороны острова. Для банкета на 40 этого хватает без выноса мебели.</li>
+    <li><strong>Круглые уходят к левой стене.</strong> Там они получают тот же эффект стены. Сейчас они в центре дают 242 тысячи при среднем по залу 306 — ниже среднего именно из-за положения.</li>
+    <li><strong>Шесть столов на четверых вместо трёх восьмёрок.</strong> Восьмёрка в открытом поле редко садится полностью: 118 посадок на 24 места за два месяца. Четвёрки садятся чаще и стыкуются в линию при банкете.</li>
+  </ul>
+</section>
+
+<div class="caveat">
+  <p class="head">Это схема принципа, а не чертёж</p>
+  <ul>
+    <li><strong>Размеры не считаны.</strong> Длина острова, ширина проходов и шаг столов определяются после замера зоны и столов рулеткой. Пока неизвестно даже, совпадают ли ширины столешниц.</li>
+    <li><strong>Альтернативное объяснение не снято.</strong> Разрыв 142 против 527 может частично означать не выбор гостя, а привычку хостес сажать к диванам первыми. Один вечер наблюдения в зале это разделит.</li>
+    <li><strong>Остров — тяжёлая мебель.</strong> Если захотим гибкости под банкет на 100+, он должен быть секционным или на колёсах. Это дороже, но иначе кусок зала станет неподвижным навсегда.</li>
+    <li><strong>Номера столов.</strong> 27a/27b/27c — рабочие обозначения на схеме. В кассе номер должен остаться за физическим местом, иначе сравнение выручки сломается молча.</li>
+  </ul>
+</div>
+
+<footer>
+  <p>Основано на выгрузке чеков Жароковой за 1 августа — 1 октября 2026 и на фото зала от 1 октября. Пропорции схемы приблизительные. Пилотная зона 1–9 и контрольная 38–44 в этой перестановке не участвуют: на них построено сравнение выручки.</p>
+</footer>
+
+</div>
